@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>経験みっけ｜あなたの人生経験を財産に変える</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #223670;
+    --gold: #D0A900;
+    --gold-light: #F5E07A;
+    --cream: #FDF8EE;
+    --warm-gray: #F4F0E8;
+    --text-dark: #1a1a2e;
+    --text-mid: #444466;
+    --text-light: #888;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+
+  /* ========== ヘッダー ========== */
+  .header {
+    background: var(--navy);
+    padding: 16px 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: rgba(208,169,0,0.15);
+  }
+
+  /* ヘッダーボタン行 */
+  .header-btns {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 10;
+  }
+  .hbtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    padding: 6px 13px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .hbtn:hover { background: rgba(255,255,255,0.22); }
+  .hbtn .icon { font-size: 14px; }
+
+  .header-label {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-family: 'Noto Serif JP', serif;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* ========== モーダル共通 ========== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,15,40,0.65);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(10,15,40,0.3);
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-head {
+    background: var(--navy);
+    padding: 18px 22px;
+    border-radius: 18px 18px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-head-title {
+    font-family: 'Noto Serif JP', serif;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .modal-close {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.3); }
+  .modal-body { padding: 24px 22px; }
+
+  /* ========== 使い方モーダル ========== */
+  .howto-intro {
+    background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--navy);
+  }
+  .howto-intro-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .howto-intro-text {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+  .howto-steps { list-style: none; }
+  .howto-step {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px dashed #E0D8C8;
+  }
+  .howto-step:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    background: var(--gold);
+    color: #fff;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-content {}
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+  .howto-note {
+    background: #FFFBEA;
+    border: 1px solid var(--gold-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+  }
+
+  /* ========== 設定モーダル ========== */
+  .setting-section {
+    margin-bottom: 22px;
+  }
+  .setting-section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .setting-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+
+  /* デモデータカード */
+  .demo-preview {
+    background: var(--warm-gray);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    border: 1px solid #E0D8C8;
+  }
+  .demo-preview strong {
+    color: var(--navy);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  .setting-btns { display: flex; flex-direction: column; gap: 10px; }
+  .sbtn {
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .sbtn:hover { transform: translateY(-1px); }
+  .sbtn-demo {
+    background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(208,169,0,0.3);
+  }
+  .sbtn-clear {
+    background: #fff;
+    color: #c0392b;
+    border: 2px solid #e8b4b0;
+  }
+  .sbtn-clear:hover { background: #FFF5F5; }
+
+  /* 確認メッセージ */
+  .confirm-msg {
+    display: none;
+    background: #E8F5E9;
+    border: 1px solid #A5D6A7;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #2E7D32;
+    margin-top: 12px;
+    text-align: center;
+  }
+  .confirm-msg.warn {
+    background: #FFF3E0;
+    border-color: #FFCC80;
+    color: #E65100;
+  }
+
+  /* ========== メインコンテナ ========== */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  .lead-box {
+    background: #fff;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 20px;
+    margin-bottom: 28px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-mid);
+  }
+  .lead-box strong { color: var(--navy); font-weight: 700; }
+
+  .form-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(34,54,112,0.08);
+    margin-bottom: 24px;
+  }
+  .section-num {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .section-hint { font-size: 12px; color: var(--text-light); margin-bottom: 18px; line-height: 1.6; }
+  .q-block { margin-bottom: 20px; }
+  .q-label { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .q-label .icon { font-size: 18px; }
+  .q-sub { font-size: 12px; color: var(--text-light); margin-bottom: 8px; line-height: 1.5; }
+  textarea {
+    width: 100%;
+    border: 2px solid #E8E4DA;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-dark);
+    resize: vertical;
+    transition: border-color 0.2s;
+    background: #FDFBF7;
+  }
+  textarea:focus { outline: none; border-color: var(--gold); background: #fff; }
+  textarea::placeholder { color: #bbb; font-size: 13px; }
+
+  .btn-wrap { text-align: center; margin-top: 8px; }
+  .btn-main {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%);
+    color: #fff;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 16px 48px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 2px;
+    box-shadow: 0 6px 24px rgba(208,169,0,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(208,169,0,0.45); }
+  .btn-note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
+
+  /* ========== 結果 ========== */
+  #result-area { display: none; }
+  .result-header { text-align: center; padding: 24px 0 16px; }
+  .result-header .badge {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 3px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    font-family: 'Noto Serif JP', serif;
+  }
+  .result-header h2 { font-family: 'Noto Serif JP', serif; font-size: 22px; color: var(--navy); line-height: 1.5; }
+  .result-header .name-display { color: var(--gold); font-weight: 900; }
+  .cards-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    color: var(--navy);
+    margin: 20px 0 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .cards-title::after { content: ''; flex: 1; height: 1px; background: #E0D8C8; }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(34,54,112,0.07);
+    border-left: 4px solid var(--gold);
+    animation: fadeUp 0.5s ease both;
+  }
+  .card:nth-child(2) { animation-delay: 0.1s; }
+  .card:nth-child(3) { animation-delay: 0.2s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .card-keyword { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+
+  .pro-section {
+    margin-top: 24px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(34,54,112,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .pro-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .pro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; }
+  .pro-badge { background: var(--navy); color: var(--gold); font-size: 11px; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
+  .blur-cards-wrap { position: relative; }
+  .blur-card { background: var(--warm-gray); border-radius: 10px; padding: 14px 18px; margin-bottom: 8px; filter: blur(4px); user-select: none; pointer-events: none; }
+  .blur-card-kw { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--navy); margin-bottom: 4px; }
+  .blur-card-desc { font-size: 12px; color: #999; line-height: 1.6; }
+  .pro-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(253,248,238,0) 0%, rgba(253,248,238,0.7) 40%, rgba(253,248,238,0.97) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;
+  }
+  .pro-message { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; text-align: center; margin-bottom: 4px; }
+  .pro-message .count { color: var(--gold); font-size: 22px; }
+  .pro-sub { font-size: 12px; color: var(--text-light); text-align: center; margin-bottom: 14px; }
+  .btn-pro {
+    display: inline-block; background: var(--navy); color: #fff;
+    font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700;
+    padding: 13px 36px; border-radius: 50px; border: none; cursor: pointer;
+    letter-spacing: 1px; box-shadow: 0 4px 16px rgba(34,54,112,0.25); transition: transform 0.2s;
+  }
+  .btn-pro:hover { transform: translateY(-2px); }
+
+  .hint-box {
+    background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%);
+    border-radius: 14px; padding: 20px; margin-top: 20px;
+    border: 1px solid rgba(34,54,112,0.12);
+  }
+  .hint-box-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 10px; }
+  .hint-item { font-size: 14px; color: var(--text-mid); padding: 6px 0; border-bottom: 1px dashed #D0CCE0; line-height: 1.6; }
+  .hint-item:last-child { border-bottom: none; }
+
+  .retry-wrap { text-align: center; margin-top: 28px; }
+  .btn-retry {
+    background: none; border: 2px solid var(--navy); color: var(--navy);
+    font-family: 'Noto Sans JP', sans-serif; font-size: 14px;
+    padding: 10px 32px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-retry:hover { background: var(--navy); color: #fff; }
+
+  #loading { display: none; text-align: center; padding: 40px 20px; }
+  .loader {
+    width: 48px; height: 48px; border: 4px solid #E8E0CC;
+    border-top-color: var(--gold); border-radius: 50%;
+    animation: spin 0.9s linear infinite; margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-family: 'Noto Serif JP', serif; color: var(--navy); font-size: 14px; line-height: 2; }
+
+  .footer { text-align: center; padding: 20px; font-size: 11px; color: var(--text-light); border-top: 1px solid #E8E0CC; margin-top: 40px; }
+
+  @media (max-width: 480px) {
+    .header-title { font-size: 22px; }
+    .btn-main { font-size: 16px; padding: 14px 36px; }
+    .container { padding: 20px 16px 50px; }
+    .hbtn span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="header-btns">
+    <button class="hbtn" onclick="openHowto()">
+      <span class="icon">❓</span><span>使い方</span>
+    </button>
+    <button class="hbtn" onclick="openSettings()">
+      <span class="icon">⚙️</span><span>設定</span>
+    </button>
+  </div>
+  <div class="header-label">KEIKEN MIKKE</div>
+  <div class="header-title">経験<span>みっけ</span></div>
+  <div class="header-sub">あなたの人生経験を、財産に変えよう 🌟</div>
+</div>
+
+<!-- ====== 使い方モーダル ====== -->
+<div class="modal-overlay" id="howto-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-title">❓ 使い方ガイド</div>
+      <button class="modal-close" onclick="closeModal('howto-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="howto-intro">
+        <div class="howto-intro-title">🎯 このアプリの目的</div>
+        <div class="howto-intro-text">
+          「自分には特技がない」と思っているシニアの方へ。<br>
+          あなたがこれまで生きてきた経験・仕事・趣味・人間関係——それ全部が「財産」です。<br>
+          このアプリは、4つの質問に答えるだけで、<strong>眠っていた強みを言語化</strong>して、<strong>活かし方のヒント</strong>まで提案します。
+        </div>
+      </div>
+
+      <ul class="howto-steps">
+        <li class="howto-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">💼 4つの質問に答える</div>
+            <div class="step-desc">
+              ・これまでの仕事・職歴<br>
+              ・人に感謝されたこと・喜ばれたこと<br>
+              ・続けてきた趣味・習慣・好きなこと<br>
+              ・自分が誇れること・乗り越えた経験<br>
+              ※うまく書かなくて大丈夫。思いつくまま書いてください。
+            </div>
+          </div>
+        </li>
+        <li class="howto-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">🔍 「強みを見つける」ボタンを押す</div>
+            <div class="step-desc">約3秒で、あなたの強みをキーワードカードとして表示します。無料版では3枚表示されます。</div>
+          </div>
+        </li>
+        <li class="howto-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">🌟 強みカードと活動ヒントを確認する</div>
+            <div class="step-desc">「あなたはこういう強みがある」というカードと、「こんな活動から始めてみては？」というヒントが1つ届きます。</div>
+          </div>
+        </li>
+        <li class="howto-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">🚀 Pro版でさらに深く掘り下げる</div>
+            <div class="step-desc">
+              強みを10個以上・自己紹介文3パターン・収益化アイデア5つ・note記事タイトル10本が生成されます。（近日公開予定）
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="howto-note">
+        💡 ヒント：まず「設定 → デモデータを入れる」を押すと、サンプルデータで動きを確認できます。<br>
+        何度でも入力し直してOKです。あなたの言葉で書くほど、精度が上がります。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 設定モーダル ====== -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-title">⚙️ 設定</div>
+      <button class="modal-close" onclick="closeModal('settings-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="setting-section">
+        <div class="setting-section-title">🧪 デモデータ</div>
+        <div class="setting-desc">
+          アプリの動きをすぐに確認したい方向けです。<br>
+          下のサンプルデータが入力欄に自動でセットされます。
+        </div>
+
+        <div class="demo-preview">
+          <strong>サンプルデータの内容（60代・元製造業の方のイメージ）</strong>
+          💼 職歴：地元の製造会社で30年、品質管理の仕事。最後は課長として10人のチームをまとめていた。<br>
+          🙏 感謝：近所のお年寄りのパソコン設定を手伝うと喜ばれた。地域の会合で司会進行を頼まれることも多かった。<br>
+          🌱 趣味：家庭菜園を20年以上続けている。ゴルフも25年やっていてコースの攻め方を教えるのが好き。<br>
+          ✨ 誇れること：会社が経営危機のとき、取引先を1から開拓して乗り越えた。
+        </div>
+
+        <div class="setting-btns">
+          <button class="sbtn sbtn-demo" onclick="loadDemo()">
+            🧪 デモデータを入れる
+          </button>
+          <button class="sbtn sbtn-clear" onclick="clearDemo()">
+            🗑️ 入力データをすべてクリアする
+          </button>
+        </div>
+
+        <div class="confirm-msg" id="confirm-ok">
+          ✅ デモデータをセットしました！「強みを見つける」ボタンを押してみてください。
+        </div>
+        <div class="confirm-msg warn" id="confirm-clear">
+          🗑️ 入力データをクリアしました。
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ====== メインコンテナ ====== -->
+<div class="container">
+
+  <div class="lead-box">
+    「自分には特技がない」そう思っていませんか？<br>
+    でも、<strong>あなたが今まで生きてきた経験こそが、誰かにとっての宝物</strong>です。<br>
+    4つの質問に答えるだけで、眠っていた強みが見つかります。
+  </div>
+
+  <div id="form-area">
+    <div class="form-section">
+      <div class="section-num">STEP 1</div>
+      <div class="section-title">あなたのことを教えてください</div>
+      <div class="section-hint">思い出しながら、気軽に書いてみてください。うまく書かなくて大丈夫です。</div>
+
+      <div class="q-block">
+        <div class="q-label"><span class="icon">💼</span>これまでの仕事・職歴</div>
+        <div class="q-sub">業種・職種・年数など。「30年間製造業で品質管理」「美容師を15年」など</div>
+        <textarea id="q1" rows="3" placeholder="例）地元の製造会社で30年、品質管理の仕事をしていました。最後は課長として10人のチームをまとめていました。"></textarea>
+      </div>
+
+      <div class="q-block">
+        <div class="q-label"><span class="icon">🙏</span>人に感謝されたこと・喜ばれたこと</div>
+        <div class="q-sub">仕事でも、プライベートでも。「ありがとう」と言われた場面を思い出して</div>
+        <textarea id="q2" rows="3" placeholder="例）近所のお年寄りのパソコン設定を手伝うと、とても喜ばれました。地域の会合で司会進行を頼まれることも多かったです。"></textarea>
+      </div>
+
+      <div class="q-block">
+        <div class="q-label"><span class="icon">🌱</span>続けてきた趣味・習慣・好きなこと</div>
+        <div class="q-sub">何年も続けていることや、気づけば人より詳しくなっていることも含めて</div>
+        <textarea id="q3" rows="3" placeholder="例）家庭菜園を20年以上やっています。ゴルフも25年やっていて、コースの攻め方を教えるのが好きです。"></textarea>
+      </div>
+
+      <div class="q-block">
+        <div class="q-label"><span class="icon">✨</span>自分が誇れること・乗り越えた経験</div>
+        <div class="q-sub">苦労して達成したこと、挫折から立ち上がった経験なども価値になります</div>
+        <textarea id="q4" rows="3" placeholder="例）会社が倒産しそうなとき、取引先を1から開拓して乗り越えました。子育てしながら夜間学校に通い資格を取りました。"></textarea>
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn-main" onclick="analyze()">🔍 あなたの強みを見つける</button>
+        <div class="btn-note">所要時間：約3秒 ／ 無料でお試しいただけます</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loading">
+    <div class="loader"></div>
+    <div class="loading-text">
+      あなたの経験を分析しています...<br>
+      眠っていた強みを探しています...<br>
+      もう少しだけお待ちください 🌟
+    </div>
+  </div>
+
+  <div id="result-area">
+    <div class="result-header">
+      <div class="badge">診断結果</div>
+      <h2>あなたの強みが<br><span class="name-display">見つかりました！</span></h2>
+    </div>
+
+    <div class="cards-title">✅ 無料版で表示できる強み（3つ）</div>
+    <div id="cards-free"></div>
+
+    <div class="pro-section">
+      <div class="pro-title-row">
+        <div class="pro-title">🔒 まだまだあります！</div>
+        <div class="pro-badge">Pro版</div>
+      </div>
+      <div class="blur-cards-wrap">
+        <div class="blur-card">
+          <div class="blur-card-kw">🌟 ○○○○○○</div>
+          <div class="blur-card-desc">あなたの経験からわかる、隠れた才能があります。詳しく見ていきましょう。</div>
+        </div>
+        <div class="blur-card">
+          <div class="blur-card-kw">💡 ○○○○○○</div>
+          <div class="blur-card-desc">長年続けてきたことが、意外な形で活かせる場面があります。</div>
+        </div>
+        <div class="blur-card">
+          <div class="blur-card-kw">🎯 ○○○○○○</div>
+          <div class="blur-card-desc">この経験は、今の時代に求められているものと一致しています。</div>
+        </div>
+        <div class="blur-cards-wrap" style="position:relative;">
+          <div class="pro-overlay">
+            <div class="pro-message">実はあと <span class="count" id="hidden-count">7</span> 個の強みが<br>見つかっています</div>
+            <div class="pro-sub">Pro版では自己紹介文・収益化アイデア・note記事タイトルも生成されます</div>
+            <button class="btn-pro" onclick="showProInfo()">続きを見る（Pro版へ）</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint-box" id="hint-box">
+      <div class="hint-box-title">💡 あなたへの活動ヒント（無料版・1つ）</div>
+      <div id="hint-content"></div>
+      <div style="margin-top:12px; font-size:12px; color:var(--text-light);">
+        ※ Pro版では収益化アイデア5つ＋note記事タイトル10本が生成されます
+      </div>
+    </div>
+
+    <div class="retry-wrap">
+      <button class="btn-retry" onclick="retry()">🔄 もう一度入力する</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  経験みっけ ｜ Powered by Smile Plus Consulting<br>
+  「考えるを、ひとりにしない」
+</div>
+
+<script>
+// ========== デモデータ ==========
+const DEMO = {
+  q1: '地元の製造会社で30年、品質管理の仕事をしていました。最後は課長として10人のチームをまとめていました。',
+  q2: '近所のお年寄りのパソコン設定を手伝うと、とても喜ばれました。地域の会合で司会進行を頼まれることも多かったです。',
+  q3: '家庭菜園を20年以上やっています。ゴルフも25年やっていて、コースの攻め方を教えるのが好きです。',
+  q4: '会社が経営危機のとき、取引先を1から開拓して乗り越えました。子育てしながら夜間学校に通い資格も取りました。'
+};
+
+// ========== モーダル制御 ==========
+function openHowto() {
+  document.getElementById('howto-modal').classList.add('open');
+}
+function openSettings() {
+  hideConfirm();
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+// オーバーレイクリックで閉じる
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+// ========== デモデータ操作 ==========
+function loadDemo() {
+  document.getElementById('q1').value = DEMO.q1;
+  document.getElementById('q2').value = DEMO.q2;
+  document.getElementById('q3').value = DEMO.q3;
+  document.getElementById('q4').value = DEMO.q4;
+  showConfirm('confirm-ok');
+  // 結果エリアが出ていたら戻す
+  document.getElementById('result-area').style.display = 'none';
+  document.getElementById('form-area').style.display = 'block';
+}
+
+function clearDemo() {
+  document.getElementById('q1').value = '';
+  document.getElementById('q2').value = '';
+  document.getElementById('q3').value = '';
+  document.getElementById('q4').value = '';
+  showConfirm('confirm-clear');
+}
+
+function showConfirm(id) {
+  hideConfirm();
+  const el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(() => { el.style.display = 'none'; }, 3500);
+}
+function hideConfirm() {
+  document.getElementById('confirm-ok').style.display = 'none';
+  document.getElementById('confirm-clear').style.display = 'none';
+}
+
+// ========== 強みデータベース ==========
+const KEYWORDS = {
+  management: {
+    words: ['管理','リーダー','課長','部長','マネージャー','チーム','まとめ','指導','育成','監督'],
+    results: [
+      { kw: '🏆 人を動かす力', desc: 'チームをまとめ、目標に向かって人を引っ張る力があります。この経験はコーチングや管理職サポートとして今も活かせます。' },
+      { kw: '🎯 問題解決の実行力', desc: '現場で起きる様々な問題を解決してきた経験は、コンサルティングや相談業として大きな価値になります。' }
+    ]
+  },
+  teaching: {
+    words: ['教え','指導','伝え','説明','わかりやすく','サポート','手伝','アドバイス','相談','教室'],
+    results: [
+      { kw: '🌸 伝える・教える力', desc: 'わかりやすく伝えることへの自然な才能があります。教える・伝えるは今の時代に最も求められているスキルです。' }
+    ]
+  },
+  craft: {
+    words: ['手作り','ものづくり','製造','品質','丁寧','こだわり','技術','職人','工夫','細かい'],
+    results: [
+      { kw: '🔧 ものを生み出す力', desc: '丁寧さとこだわりから生まれた技術力は、あなただけのオリジナルな価値です。作品販売やワークショップに展開できます。' }
+    ]
+  },
+  social: {
+    words: ['地域','つながり','コミュニティ','ボランティア','会合','友人','人脈','繋がり','仲間','交流'],
+    results: [
+      { kw: '🤝 人をつなぐ力', desc: '地域や人との深いつながりを作ってきた力は、コミュニティ運営やコーディネーターとして輝けるスキルです。' }
+    ]
+  },
+  resilience: {
+    words: ['乗り越え','苦労','失敗','立ち直','頑張','挑戦','困難','壁','試練','諦めず','開拓'],
+    results: [
+      { kw: '💪 逆境を乗り越えた経験', desc: '苦しい経験を乗り越えてきたことは、同じ境遇の人への最強のメッセージになります。体験談は誰にも書けない財産です。' }
+    ]
+  },
+  hobby: {
+    words: ['趣味','ゴルフ','料理','園芸','旅行','音楽','読書','写真','釣り','登山','家庭菜園'],
+    results: [
+      { kw: '🌱 深い趣味の専門知識', desc: '長年続けてきた趣味は、初心者が最も「教えてほしい」と思う専門知識の宝庫です。ブログや動画でも発信できます。' }
+    ]
+  },
+  default: [
+    { kw: '✨ 人生経験という財産', desc: '積み重ねてきた年月は、若い世代が持ちえない本物の知恵です。その経験談自体が価値になります。' },
+    { kw: '📖 語れるストーリー', desc: 'あなたの経験には、誰かの背中を押す力があります。話す・書くだけで人の役に立てます。' },
+    { kw: '🎓 継続してきた実績', desc: '何かを長年続けてきたこと自体が、信頼の証です。継続力と安定感は最大の強みのひとつです。' }
+  ]
+};
+
+const HINTS = [
+  '📝 まずは「note」に自分の経験談を1本書いてみましょう。読んだ人から「同じ経験がある」と共感が生まれます。',
+  '🎙️ 地域の生涯学習センターや公民館で、得意なことを1時間話す「プチ講座」から始めてみましょう。',
+  '💬 SNSで「〇〇年やってわかったこと」を週1回投稿するだけで、フォロワーが増え始めます。',
+  '🤝 知人や友人の困りごとを無料で相談に乗るところからスタートすると、自然に口コミが広がります。',
+];
+
+function getRandomItems(arr, n) {
+  return [...arr].sort(() => Math.random() - 0.5).slice(0, n);
+}
+
+// ========== 分析 ==========
+function analyze() {
+  const q1 = document.getElementById('q1').value.trim();
+  const q2 = document.getElementById('q2').value.trim();
+  const q3 = document.getElementById('q3').value.trim();
+  const q4 = document.getElementById('q4').value.trim();
+
+  if (!q1 && !q2 && !q3 && !q4) {
+    alert('少しでも構いません。まず1つ入力してみてください 😊\n\n「設定→デモデータを入れる」でサンプルデータも確認できます。');
+    return;
+  }
+
+  const allText = (q1 + q2 + q3 + q4).toLowerCase();
+
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+
+  setTimeout(() => {
+    let matched = [];
+    for (const key of Object.keys(KEYWORDS)) {
+      if (key === 'default') continue;
+      const data = KEYWORDS[key];
+      if (data.words.some(w => allText.includes(w))) {
+        matched.push(...data.results);
+      }
+    }
+    const defaults = KEYWORDS.default;
+    for (const d of defaults) {
+      if (matched.length >= 3) break;
+      matched.push(d);
+    }
+    const free3 = getRandomItems(matched.length >= 3 ? matched : [...matched, ...defaults], 3);
+    const hiddenCount = Math.floor(Math.random() * 4) + 6;
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('result-area').style.display = 'block';
+    document.getElementById('hidden-count').textContent = hiddenCount;
+
+    const container = document.getElementById('cards-free');
+    container.innerHTML = '';
+    free3.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = `${i * 0.12}s`;
+      card.innerHTML = `<div class="card-keyword">${item.kw}</div><div class="card-desc">${item.desc}</div>`;
+      container.appendChild(card);
+    });
+
+    const hint = HINTS[Math.floor(Math.random() * HINTS.length)];
+    document.getElementById('hint-content').innerHTML = `<div class="hint-item">${hint}</div>`;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 2800);
+}
+
+function retry() {
+  document.getElementById('result-area').style.display = 'none';
+  document.getElementById('form-area').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showProInfo() {
+  alert('🌟 Pro版では...\n\n✅ 強みキーワード 10個以上（理由つき）\n✅ 自己紹介文 3パターン生成\n✅ 収益化アイデア 5つ提案\n✅ note記事タイトル 10本生成\n✅ 過去の入力を保存・見返せる\n\n近日公開予定です。お楽しみに！');
+}
+</script>
+</body>
+</html>
