@@ -5,185 +5,271 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>経験みっけ｜あなたの人生経験を財産に変える</title>
 <link rel="icon" type="image/png" href="https://spc-jp.github.io/keiken-mikke/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #223670;
-    --gold: #D0A900;
-    --gold-light: #F5E07A;
-    --cream: #FDF8EE;
-    --warm-gray: #F4F0E8;
-    --text-dark: #1a1a2e;
-    --text-mid: #444466;
-    --text-light: #888;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+:root {
+  --navy: #1C2D5E;
+  --navy2: #162348;
+  --gold: #C8A400;
+  --gold2: #E8C000;
+  --gold-light: #F5E07A;
+  --gold-pale: #FDF5D0;
+  --cream: #FDFAF2;
+  --warm-gray: #F2EDE0;
+  --text-dark: #1a1a2e;
+  --text-mid: #3a3a5a;
+  --text-light: #888;
+  --border: #E2D9C0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
 
-  .header { background: var(--navy); padding: 16px 20px; text-align: center; position: relative; overflow: hidden; }
-  .header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 150px; height: 150px; border-radius: 50%; background: rgba(208,169,0,0.15); }
-  .header-btns { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; position: relative; z-index: 10; }
-  .hbtn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; padding: 6px 13px; border-radius: 20px; cursor: pointer; transition: background 0.2s; }
-  .hbtn:hover { background: rgba(255,255,255,0.22); }
-  .header-label { font-family: 'Noto Serif JP', serif; color: var(--gold); font-size: 11px; letter-spacing: 4px; margin-bottom: 6px; }
-  .header-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 28px; font-weight: 900; letter-spacing: 2px; }
-  .header-title span { color: var(--gold); }
-  .header-sub { color: rgba(255,255,255,0.7); font-size: 13px; margin-top: 6px; }
+/* ========== ヘッダー ========== */
+.header {
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #2a3f7a 100%);
+  padding: 14px 20px 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(200,164,0,0.12); }
+.header::after  { content: ''; position: absolute; bottom: -30px; left: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(200,164,0,0.08); }
+.header-btns { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 14px; position: relative; z-index: 10; }
+.hbtn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); font-family: 'Noto Sans JP', sans-serif; font-size: 12px; padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.5px; }
+.hbtn:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.35); }
+.header-label { font-family: 'Noto Serif JP', serif; color: var(--gold2); font-size: 10px; letter-spacing: 6px; margin-bottom: 8px; opacity: 0.9; }
+.header-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 32px; font-weight: 900; letter-spacing: 3px; line-height: 1; }
+.header-title span { color: var(--gold2); }
+.header-sub { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 8px; letter-spacing: 1px; }
 
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,15,40,0.65); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: #fff; border-radius: 18px; width: 100%; max-width: 520px; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(10,15,40,0.3); animation: modalIn 0.25s ease; }
-  @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-  .modal-head { background: var(--navy); padding: 18px 22px; border-radius: 18px 18px 0 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 2; }
-  .modal-head-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 17px; font-weight: 700; }
-  .modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .modal-close:hover { background: rgba(255,255,255,0.3); }
-  .modal-body { padding: 24px 22px; }
+/* 限定バナー */
+.limited-banner {
+  background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+  padding: 10px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.limited-banner::before { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: rgba(255,255,255,0.08); transform: skewX(-20deg); animation: shimmer 3s infinite; }
+@keyframes shimmer { 0% { left: -100%; } 100% { left: 150%; } }
+.limited-text { color: #fff; font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 1px; }
+.limited-text strong { font-size: 18px; color: #FFE066; }
 
-  .howto-intro { background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%); border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; border-left: 4px solid var(--navy); }
-  .howto-intro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-  .howto-intro-text { font-size: 13px; color: var(--text-mid); line-height: 1.8; }
-  .howto-steps { list-style: none; }
-  .howto-step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px dashed #E0D8C8; }
-  .howto-step:last-child { border-bottom: none; }
-  .step-num { flex-shrink: 0; width: 30px; height: 30px; background: var(--gold); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .step-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-  .step-desc { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
-  .howto-note { background: #FFFBEA; border: 1px solid var(--gold-light); border-radius: 10px; padding: 12px 16px; margin-top: 18px; font-size: 12px; color: var(--text-mid); line-height: 1.8; }
+/* ========== モーダル共通 ========== */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(5,10,30,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(2px); }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 20px; width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(5,10,30,0.35); animation: modalIn 0.28s ease; }
+@keyframes modalIn { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.modal-head { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); padding: 20px 24px; border-radius: 20px 20px 0 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 2; }
+.modal-head-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 17px; font-weight: 700; }
+.modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.modal-close:hover { background: rgba(255,255,255,0.28); }
+.modal-body { padding: 26px 24px; }
 
-  .setting-section { margin-bottom: 22px; }
-  .setting-section-title { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-  .setting-desc { font-size: 12px; color: var(--text-light); margin-bottom: 14px; line-height: 1.7; }
-  .demo-preview { background: var(--warm-gray); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; font-size: 12px; color: var(--text-mid); line-height: 1.8; border: 1px solid #E0D8C8; }
-  .demo-preview strong { color: var(--navy); display: block; margin-bottom: 4px; font-size: 13px; }
-  .setting-btns { display: flex; flex-direction: column; gap: 10px; }
-  .sbtn { width: 100%; padding: 13px 20px; border-radius: 10px; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .sbtn:hover { transform: translateY(-1px); }
-  .sbtn-demo { background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%); color: #fff; box-shadow: 0 4px 14px rgba(208,169,0,0.3); }
-  .sbtn-clear { background: #fff; color: #c0392b; border: 2px solid #e8b4b0; }
-  .confirm-msg { display: none; background: #E8F5E9; border: 1px solid #A5D6A7; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #2E7D32; margin-top: 12px; text-align: center; }
-  .confirm-msg.warn { background: #FFF3E0; border-color: #FFCC80; color: #E65100; }
+/* 使い方モーダル */
+.howto-intro { background: linear-gradient(135deg, #EEF2FF 0%, #E4EEFF 100%); border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; border-left: 4px solid var(--navy); }
+.howto-intro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.howto-intro-text { font-size: 13px; color: var(--text-mid); line-height: 1.9; }
+.howto-steps { list-style: none; }
+.howto-step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px dashed var(--border); }
+.howto-step:last-child { border-bottom: none; }
+.step-num { flex-shrink: 0; width: 32px; height: 32px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(200,164,0,0.35); }
+.step-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.step-desc { font-size: 12px; color: var(--text-mid); line-height: 1.8; }
+.howto-note { background: #FFFBEA; border: 1px solid var(--gold-light); border-radius: 12px; padding: 14px 18px; margin-top: 20px; font-size: 12px; color: var(--text-mid); line-height: 1.9; }
 
-  .container { max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
-  .lead-box { background: #fff; border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; padding: 18px 20px; margin-bottom: 28px; font-size: 15px; line-height: 1.8; color: var(--text-mid); }
-  .lead-box strong { color: var(--navy); font-weight: 700; }
-  .form-section { background: #fff; border-radius: 16px; padding: 28px 24px; box-shadow: 0 4px 20px rgba(34,54,112,0.08); margin-bottom: 24px; }
-  .section-num { display: inline-block; background: var(--navy); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 2px; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
-  .section-title { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .section-hint { font-size: 12px; color: var(--text-light); margin-bottom: 18px; line-height: 1.6; }
-  .q-block { margin-bottom: 20px; }
-  .q-label { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-  .q-sub { font-size: 12px; color: var(--text-light); margin-bottom: 8px; line-height: 1.5; }
-  textarea { width: 100%; border: 2px solid #E8E4DA; border-radius: 10px; padding: 12px 14px; font-family: 'Noto Sans JP', sans-serif; font-size: 15px; line-height: 1.7; color: var(--text-dark); resize: vertical; transition: border-color 0.2s; background: #FDFBF7; }
-  textarea:focus { outline: none; border-color: var(--gold); background: #fff; }
-  textarea::placeholder { color: #bbb; font-size: 13px; }
-  .btn-wrap { text-align: center; margin-top: 8px; }
-  .btn-main { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; padding: 16px 48px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 2px; box-shadow: 0 6px 24px rgba(208,169,0,0.35); transition: transform 0.2s, box-shadow 0.2s; }
-  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(208,169,0,0.45); }
-  .btn-note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
+/* 設定モーダル */
+.setting-section { margin-bottom: 24px; }
+.setting-section-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.setting-desc { font-size: 12px; color: var(--text-light); margin-bottom: 16px; line-height: 1.8; }
+.demo-preview { background: var(--warm-gray); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; font-size: 12px; color: var(--text-mid); line-height: 2; border: 1px solid var(--border); }
+.demo-preview strong { color: var(--navy); display: block; margin-bottom: 6px; font-size: 13px; }
+.setting-btns { display: flex; flex-direction: column; gap: 10px; }
+.sbtn { width: 100%; padding: 14px 20px; border-radius: 12px; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.sbtn:hover { transform: translateY(-2px); }
+.sbtn-demo { background: linear-gradient(135deg, var(--gold) 0%, #A88000 100%); color: #fff; box-shadow: 0 4px 16px rgba(200,164,0,0.3); }
+.sbtn-clear { background: #fff; color: #c0392b; border: 2px solid #f0b4b0; }
+.confirm-msg { display: none; border-radius: 10px; padding: 11px 16px; font-size: 13px; margin-top: 12px; text-align: center; }
+.confirm-msg.ok { background: #E8F5E9; border: 1px solid #A5D6A7; color: #2E7D32; }
+.confirm-msg.warn { background: #FFF3E0; border: 1px solid #FFCC80; color: #E65100; }
 
-  #result-area { display: none; }
-  .result-header { text-align: center; padding: 24px 0 16px; }
-  .result-header .badge { display: inline-block; background: var(--gold); color: #fff; font-size: 12px; letter-spacing: 3px; padding: 4px 16px; border-radius: 20px; margin-bottom: 12px; font-family: 'Noto Serif JP', serif; }
-  .result-header h2 { font-family: 'Noto Serif JP', serif; font-size: 22px; color: var(--navy); line-height: 1.5; }
-  .result-header .name-display { color: var(--gold); font-weight: 900; }
-  .cards-title { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
-  .cards-title::after { content: ''; flex: 1; height: 1px; background: #E0D8C8; }
-  .card { background: #fff; border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(34,54,112,0.07); border-left: 4px solid var(--gold); animation: fadeUp 0.5s ease both; }
-  .card:nth-child(2) { animation-delay: 0.1s; }
-  .card:nth-child(3) { animation-delay: 0.2s; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-  .card-keyword { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .card-desc { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+/* ========== メインコンテナ ========== */
+.container { max-width: 700px; margin: 0 auto; padding: 32px 20px 80px; }
 
-  .pro-section { margin-top: 24px; background: #fff; border-radius: 16px; padding: 24px 20px; box-shadow: 0 4px 20px rgba(34,54,112,0.08); position: relative; overflow: hidden; }
-  .pro-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-  .pro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; }
-  .pro-badge { background: var(--navy); color: var(--gold); font-size: 11px; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
-  .blur-card { background: var(--warm-gray); border-radius: 10px; padding: 14px 18px; margin-bottom: 8px; filter: blur(4px); user-select: none; pointer-events: none; }
-  .blur-card-kw { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--navy); margin-bottom: 4px; }
-  .blur-card-desc { font-size: 12px; color: #999; line-height: 1.6; }
-  .pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(253,248,238,0) 0%, rgba(253,248,238,0.7) 40%, rgba(253,248,238,0.97) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 24px; }
-  .pro-message { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; text-align: center; margin-bottom: 4px; }
-  .pro-message .count { color: var(--gold); font-size: 22px; }
-  .pro-sub { font-size: 12px; color: var(--text-light); text-align: center; margin-bottom: 14px; }
-  .btn-pro { background: var(--navy); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; padding: 13px 36px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 1px; box-shadow: 0 4px 16px rgba(34,54,112,0.25); transition: transform 0.2s; }
-  .btn-pro:hover { transform: translateY(-2px); }
+/* リード */
+.lead-box { background: #fff; border-left: 5px solid var(--gold); border-radius: 0 16px 16px 0; padding: 20px 24px; margin-bottom: 32px; font-size: 15px; line-height: 1.9; color: var(--text-mid); box-shadow: 0 2px 16px rgba(28,45,94,0.06); }
+.lead-box strong { color: var(--navy); font-weight: 700; }
 
-  .hint-box { background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%); border-radius: 14px; padding: 20px; margin-top: 20px; border: 1px solid rgba(34,54,112,0.12); }
-  .hint-box-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 10px; }
-  .hint-item { font-size: 14px; color: var(--text-mid); padding: 6px 0; border-bottom: 1px dashed #D0CCE0; line-height: 1.6; }
-  .hint-item:last-child { border-bottom: none; }
-  .retry-wrap { text-align: center; margin-top: 28px; }
-  .btn-retry { background: none; border: 2px solid var(--navy); color: var(--navy); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; padding: 10px 32px; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
-  .btn-retry:hover { background: var(--navy); color: #fff; }
+/* フォーム */
+.form-section { background: #fff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 4px 24px rgba(28,45,94,0.08); margin-bottom: 24px; border: 1px solid var(--border); }
+.section-num { display: inline-block; background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 3px; padding: 4px 16px; border-radius: 20px; margin-bottom: 12px; }
+.section-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.section-hint { font-size: 12px; color: var(--text-light); margin-bottom: 24px; line-height: 1.7; }
+.q-block { margin-bottom: 22px; }
+.q-label { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.q-sub { font-size: 12px; color: var(--text-light); margin-bottom: 8px; line-height: 1.6; }
+textarea { width: 100%; border: 2px solid var(--border); border-radius: 12px; padding: 14px 16px; font-family: 'Noto Sans JP', sans-serif; font-size: 15px; line-height: 1.8; color: var(--text-dark); resize: vertical; transition: border-color 0.2s, box-shadow 0.2s; background: #FDFBF5; }
+textarea:focus { outline: none; border-color: var(--gold); background: #fff; box-shadow: 0 0 0 3px rgba(200,164,0,0.12); }
+textarea::placeholder { color: #ccc; font-size: 13px; }
 
-  /* パスワードモーダル */
-  .pw-modal { background: #fff; border-radius: 18px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(10,15,40,0.3); animation: modalIn 0.25s ease; overflow: hidden; }
-  .pw-body { padding: 28px 24px; }
-  .pw-icon { font-size: 40px; text-align: center; margin-bottom: 12px; }
-  .pw-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; color: var(--navy); text-align: center; margin-bottom: 8px; }
-  .pw-desc { font-size: 13px; color: var(--text-mid); text-align: center; line-height: 1.7; margin-bottom: 20px; }
-  .pw-input { width: 100%; border: 2px solid #E8E4DA; border-radius: 10px; padding: 14px 16px; font-family: 'Noto Sans JP', sans-serif; font-size: 16px; text-align: center; letter-spacing: 3px; color: var(--navy); transition: border-color 0.2s; margin-bottom: 14px; }
-  .pw-input:focus { outline: none; border-color: var(--gold); }
-  .pw-input.error { border-color: #e74c3c; }
-  .pw-error { font-size: 12px; color: #e74c3c; text-align: center; margin-bottom: 10px; display: none; }
-  .btn-pw-submit { width: 100%; background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; padding: 14px; border-radius: 10px; border: none; cursor: pointer; letter-spacing: 1px; margin-bottom: 12px; transition: transform 0.2s; }
-  .btn-pw-submit:hover { transform: translateY(-1px); }
-  .btn-pw-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  .pw-note { font-size: 11px; color: var(--text-light); text-align: center; line-height: 1.8; }
-  .pw-note a { color: var(--gold); text-decoration: none; }
-  .btn-pw-cancel { width: 100%; background: none; border: none; color: var(--text-light); font-size: 13px; cursor: pointer; margin-top: 6px; padding: 6px; }
+/* メインボタン */
+.btn-wrap { text-align: center; margin-top: 10px; }
+.btn-main { display: inline-block; background: linear-gradient(135deg, var(--gold2) 0%, var(--gold) 60%, #A88000 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; padding: 18px 52px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 2px; box-shadow: 0 8px 28px rgba(200,164,0,0.4); transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+.btn-main::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: rgba(255,255,255,0.15); transform: skewX(-20deg); transition: left 0.4s; }
+.btn-main:hover::after { left: 150%; }
+.btn-main:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(200,164,0,0.5); }
+.btn-note { font-size: 12px; color: var(--text-light); margin-top: 12px; }
 
-  /* Pro版結果 */
-  #pro-result-area { display: none; }
-  .pro-result-header { background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%); border-radius: 16px; padding: 24px 20px; text-align: center; margin-bottom: 20px; color: #fff; }
-  .pro-result-badge { display: inline-block; background: var(--gold); color: #fff; font-size: 11px; letter-spacing: 3px; padding: 3px 14px; border-radius: 20px; margin-bottom: 10px; font-family: 'Noto Serif JP', serif; }
-  .pro-result-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; line-height: 1.5; }
-  .pro-result-title span { color: var(--gold-light); }
-  .pro-block { background: #fff; border-radius: 14px; padding: 22px 20px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(34,54,112,0.07); }
-  .pro-block-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--gold-light); display: flex; align-items: center; gap: 8px; }
-  .pro-strength-card { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px dashed #E8E4DA; animation: fadeUp 0.4s ease both; }
-  .pro-strength-card:last-child { border-bottom: none; }
-  .pro-strength-emoji { font-size: 24px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
-  .pro-strength-kw { font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-  .pro-strength-reason { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
-  .intro-tab-wrap { display: flex; gap: 6px; margin-bottom: 14px; }
-  .intro-tab { flex: 1; padding: 8px 4px; border-radius: 8px; border: 2px solid #E8E4DA; background: #fff; font-size: 12px; font-weight: 700; color: var(--text-mid); cursor: pointer; text-align: center; transition: all 0.2s; }
-  .intro-tab.active { border-color: var(--navy); background: var(--navy); color: #fff; }
-  .intro-content { display: none; }
-  .intro-content.active { display: block; }
-  .intro-text { background: var(--warm-gray); border-radius: 10px; padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-dark); margin-bottom: 10px; }
-  .btn-copy { background: none; border: 1px solid var(--navy); color: var(--navy); font-size: 12px; padding: 6px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
-  .btn-copy:hover { background: var(--navy); color: #fff; }
-  .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: #fff; }
-  .monetize-item { padding: 12px 0; border-bottom: 1px dashed #E8E4DA; animation: fadeUp 0.4s ease both; }
-  .monetize-item:last-child { border-bottom: none; }
-  .monetize-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-  .monetize-desc { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
-  .note-title-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed #E8E4DA; font-size: 14px; color: var(--text-dark); line-height: 1.6; animation: fadeUp 0.4s ease both; }
-  .note-title-item:last-child { border-bottom: none; }
-  .note-num { flex-shrink: 0; width: 24px; height: 24px; background: var(--gold); color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+/* 購入者の声 */
+.voices-box { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 24px; border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(28,45,94,0.05); }
+.voices-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.voice-item { padding: 12px 0; border-bottom: 1px dashed var(--border); }
+.voice-item:last-child { border-bottom: none; padding-bottom: 0; }
+.voice-text { font-size: 13px; color: var(--text-mid); line-height: 1.8; margin-bottom: 6px; }
+.voice-text::before { content: '❝ '; color: var(--gold); font-size: 16px; }
+.voice-name { font-size: 11px; color: var(--text-light); text-align: right; }
 
-  /* 宝探しアニメーション */
-  #loading { display: none; }
-  #pro-loading { display: none; }
-  .treasure-loading { background: var(--navy); border-radius: 20px; padding: 48px 24px 40px; text-align: center; position: relative; overflow: hidden; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 24px; }
-  .tl-canvas-wrap { position: absolute; inset: 0; pointer-events: none; }
-  .tl-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
-  .tl-gem { font-size: 60px; line-height: 1; margin-bottom: 16px; position: relative; z-index: 2; animation: gemPulse 1.8s ease-in-out infinite; }
-  @keyframes gemPulse { 0%,100% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 16px rgba(208,169,0,0.9)); } 50% { transform: scale(1.13) rotate(3deg); filter: drop-shadow(0 0 30px rgba(208,169,0,1)); } }
-  .tl-label { color: var(--gold); font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; position: relative; z-index: 2; }
-  .tl-main { color: #fff; font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; position: relative; z-index: 2; }
-  .tl-sub { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.9; position: relative; z-index: 2; min-height: 48px; transition: opacity 0.4s; }
-  .tl-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
-  .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: dotBounce 1.4s ease-in-out infinite; }
-  .tl-dot:nth-child(2) { animation-delay: 0.2s; background: var(--gold-light); }
-  .tl-dot:nth-child(3) { animation-delay: 0.4s; background: #fff; }
-  @keyframes dotBounce { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.2); opacity: 1; } }
+/* ========== 無料版結果 ========== */
+#result-area { display: none; }
+.result-header { text-align: center; padding: 28px 0 18px; }
+.result-header .badge { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); color: #fff; font-size: 11px; letter-spacing: 3px; padding: 5px 18px; border-radius: 20px; margin-bottom: 14px; font-family: 'Noto Serif JP', serif; box-shadow: 0 3px 12px rgba(200,164,0,0.3); }
+.result-header h2 { font-family: 'Noto Serif JP', serif; font-size: 24px; color: var(--navy); line-height: 1.6; }
+.result-header .name-display { color: var(--gold); font-weight: 900; }
+.cards-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); margin: 22px 0 14px; display: flex; align-items: center; gap: 10px; }
+.cards-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.card { background: #fff; border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; box-shadow: 0 3px 16px rgba(28,45,94,0.08); border-left: 5px solid var(--gold); animation: fadeUp 0.5s ease both; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.card-keyword { font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.card-desc { font-size: 13px; color: var(--text-mid); line-height: 1.8; }
 
-  .footer { text-align: center; padding: 20px; font-size: 11px; color: var(--text-light); border-top: 1px solid #E8E0CC; margin-top: 40px; }
-  @media (max-width: 480px) { .header-title { font-size: 22px; } .btn-main { font-size: 16px; padding: 14px 36px; } .container { padding: 20px 16px 50px; } .hbtn span { display: none; } }
+/* Pro版ぼかし */
+.pro-section { margin-top: 28px; background: #fff; border-radius: 20px; padding: 26px 22px; box-shadow: 0 4px 24px rgba(28,45,94,0.1); position: relative; overflow: hidden; border: 1px solid var(--border); }
+.pro-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.pro-title { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--navy); font-weight: 700; }
+.pro-badge { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); color: var(--gold2); font-size: 11px; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; font-weight: 700; }
+.blur-card { background: var(--warm-gray); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; filter: blur(5px); user-select: none; pointer-events: none; }
+.blur-card-kw { font-family: 'Noto Serif JP', serif; font-size: 17px; color: var(--navy); margin-bottom: 5px; }
+.blur-card-desc { font-size: 12px; color: #999; line-height: 1.7; }
+.pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(253,250,242,0) 0%, rgba(253,250,242,0.75) 35%, rgba(253,250,242,0.98) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 28px; }
+.pro-message { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--navy); font-weight: 700; text-align: center; margin-bottom: 6px; }
+.pro-message .count { color: var(--gold); font-size: 26px; }
+.pro-sub { font-size: 12px; color: var(--text-light); text-align: center; margin-bottom: 16px; line-height: 1.8; }
+
+/* 限定ボタン */
+.btn-pro-wrap { text-align: center; }
+.btn-pro { display: inline-block; background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; padding: 15px 40px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 1px; box-shadow: 0 6px 20px rgba(28,45,94,0.3); transition: transform 0.2s, box-shadow 0.2s; }
+.btn-pro:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(28,45,94,0.4); }
+.limited-sub { font-size: 11px; color: #c0392b; margin-top: 8px; font-weight: 700; letter-spacing: 1px; }
+
+.hint-box { background: linear-gradient(135deg, #EEF2FF 0%, #E4EEFF 100%); border-radius: 16px; padding: 22px; margin-top: 22px; border: 1px solid rgba(28,45,94,0.1); }
+.hint-box-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 12px; }
+.hint-item { font-size: 14px; color: var(--text-mid); padding: 7px 0; border-bottom: 1px dashed #D0CCE0; line-height: 1.7; }
+.hint-item:last-child { border-bottom: none; }
+
+.retry-wrap { text-align: center; margin-top: 32px; }
+.btn-retry { background: none; border: 2px solid var(--navy); color: var(--navy); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; padding: 11px 36px; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
+.btn-retry:hover { background: var(--navy); color: #fff; }
+
+/* ========== パスワードモーダル ========== */
+.pw-modal { background: #fff; border-radius: 20px; width: 100%; max-width: 420px; box-shadow: 0 24px 80px rgba(5,10,30,0.35); animation: modalIn 0.28s ease; overflow: hidden; }
+.pw-head { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); padding: 28px 24px; text-align: center; }
+.pw-head-icon { font-size: 44px; margin-bottom: 10px; }
+.pw-head-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.pw-head-desc { color: rgba(255,255,255,0.7); font-size: 12px; line-height: 1.7; }
+.pw-body { padding: 28px 26px; }
+.pw-limited { background: #fff5f5; border: 1px solid #ffcccc; border-radius: 10px; padding: 10px 16px; text-align: center; margin-bottom: 18px; font-size: 13px; color: #c0392b; font-weight: 700; }
+.pw-input { width: 100%; border: 2px solid var(--border); border-radius: 12px; padding: 15px 18px; font-family: 'Noto Sans JP', sans-serif; font-size: 17px; text-align: center; letter-spacing: 4px; color: var(--navy); transition: border-color 0.2s, box-shadow 0.2s; margin-bottom: 14px; background: var(--cream); }
+.pw-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,164,0,0.15); background: #fff; }
+.pw-input.error { border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231,76,60,0.1); }
+.pw-error { font-size: 12px; color: #e74c3c; text-align: center; margin-bottom: 12px; display: none; }
+.btn-pw-submit { width: 100%; background: linear-gradient(135deg, var(--gold2) 0%, var(--gold) 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 700; padding: 16px; border-radius: 12px; border: none; cursor: pointer; letter-spacing: 1px; margin-bottom: 14px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 6px 20px rgba(200,164,0,0.35); }
+.btn-pw-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(200,164,0,0.45); }
+.btn-pw-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+.pw-note { font-size: 11px; color: var(--text-light); text-align: center; line-height: 2; }
+.pw-note a { color: var(--gold); text-decoration: none; font-weight: 700; }
+.btn-pw-cancel { width: 100%; background: none; border: none; color: var(--text-light); font-size: 13px; cursor: pointer; margin-top: 8px; padding: 8px; }
+
+/* ========== Pro版結果（証書風） ========== */
+#pro-result-area { display: none; }
+.pro-report-wrap { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(28,45,94,0.14); border: 1px solid var(--border); margin-bottom: 20px; }
+.pro-report-header { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #2a3f7a 100%); padding: 32px 28px; text-align: center; position: relative; overflow: hidden; }
+.pro-report-header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(200,164,0,0.12); }
+.pro-report-header::after { content: ''; position: absolute; bottom: -20px; left: -20px; width: 100px; height: 100px; border-radius: 50%; background: rgba(200,164,0,0.08); }
+.pro-report-badge { display: inline-block; background: rgba(200,164,0,0.2); border: 1px solid rgba(200,164,0,0.5); color: var(--gold2); font-size: 10px; letter-spacing: 4px; padding: 5px 18px; border-radius: 20px; margin-bottom: 14px; font-family: 'Noto Serif JP', serif; position: relative; z-index: 1; }
+.pro-report-title { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 900; color: #fff; line-height: 1.6; position: relative; z-index: 1; }
+.pro-report-title span { color: var(--gold2); }
+.pro-report-line { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold2), transparent); margin: 14px auto; position: relative; z-index: 1; }
+
+/* Pro版ブロック */
+.pro-block { padding: 26px 28px; border-bottom: 1px solid var(--border); }
+.pro-block:last-child { border-bottom: none; }
+.pro-block-title { font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; padding-bottom: 12px; border-bottom: 2px solid var(--gold-pale); }
+.pro-strength-card { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px dashed var(--border); animation: fadeUp 0.4s ease both; }
+.pro-strength-card:last-child { border-bottom: none; }
+.pro-strength-emoji { font-size: 26px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+.pro-strength-kw { font-family: 'Noto Serif JP', serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+.pro-strength-reason { font-size: 13px; color: var(--text-mid); line-height: 1.8; }
+
+/* 自己紹介文タブ */
+.intro-tab-wrap { display: flex; gap: 8px; margin-bottom: 16px; }
+.intro-tab { flex: 1; padding: 9px 4px; border-radius: 10px; border: 2px solid var(--border); background: #fff; font-size: 13px; font-weight: 700; color: var(--text-mid); cursor: pointer; text-align: center; transition: all 0.2s; }
+.intro-tab.active { border-color: var(--navy); background: var(--navy); color: #fff; }
+.intro-content { display: none; }
+.intro-content.active { display: block; }
+.intro-text { background: var(--warm-gray); border-radius: 12px; padding: 18px; font-size: 14px; line-height: 1.9; color: var(--text-dark); margin-bottom: 12px; border-left: 3px solid var(--gold); }
+.btn-copy { background: none; border: 1.5px solid var(--navy); color: var(--navy); font-size: 12px; padding: 7px 20px; border-radius: 20px; cursor: pointer; transition: all 0.2s; font-weight: 700; }
+.btn-copy:hover { background: var(--navy); color: #fff; }
+.btn-copy.copied { background: #27ae60; border-color: #27ae60; color: #fff; }
+
+/* 収益化 */
+.monetize-item { padding: 14px 0; border-bottom: 1px dashed var(--border); animation: fadeUp 0.4s ease both; }
+.monetize-item:last-child { border-bottom: none; }
+.monetize-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+.monetize-desc { font-size: 13px; color: var(--text-mid); line-height: 1.8; padding-left: 28px; }
+
+/* note記事タイトル */
+.note-title-item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px dashed var(--border); font-size: 14px; color: var(--text-dark); line-height: 1.7; animation: fadeUp 0.4s ease both; }
+.note-title-item:last-child { border-bottom: none; }
+.note-num { flex-shrink: 0; width: 26px; height: 26px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+
+/* 次のアクション */
+.next-action { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%); border-radius: 16px; padding: 24px; margin-top: 20px; text-align: center; }
+.next-action-title { font-family: 'Noto Serif JP', serif; color: var(--gold2); font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.next-action-btns { display: flex; flex-direction: column; gap: 10px; }
+.btn-action { padding: 13px 20px; border-radius: 10px; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-action:hover { transform: translateY(-1px); }
+.btn-action-note { background: linear-gradient(135deg, var(--gold2) 0%, var(--gold) 100%); color: #fff; }
+.btn-action-retry { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
+
+/* 宝探しアニメーション */
+#loading { display: none; }
+#pro-loading { display: none; }
+.treasure-loading { background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 60%, #2a3f7a 100%); border-radius: 20px; padding: 52px 24px 44px; text-align: center; position: relative; overflow: hidden; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 24px; }
+.tl-canvas-wrap { position: absolute; inset: 0; pointer-events: none; }
+.tl-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
+.tl-gem { font-size: 64px; line-height: 1; margin-bottom: 18px; position: relative; z-index: 2; animation: gemPulse 1.8s ease-in-out infinite; }
+@keyframes gemPulse { 0%,100% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 18px rgba(200,164,0,0.9)); } 50% { transform: scale(1.14) rotate(3deg); filter: drop-shadow(0 0 32px rgba(200,164,0,1)); } }
+.tl-label { color: var(--gold2); font-size: 10px; letter-spacing: 5px; margin-bottom: 12px; position: relative; z-index: 2; opacity: 0.9; }
+.tl-main { color: #fff; font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; letter-spacing: 1px; margin-bottom: 12px; position: relative; z-index: 2; }
+.tl-sub { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 2; position: relative; z-index: 2; min-height: 52px; transition: opacity 0.4s; }
+.tl-dots { display: flex; justify-content: center; gap: 10px; margin-top: 20px; position: relative; z-index: 2; }
+.tl-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gold); animation: dotBounce 1.4s ease-in-out infinite; }
+.tl-dot:nth-child(2) { animation-delay: 0.2s; background: var(--gold-light); }
+.tl-dot:nth-child(3) { animation-delay: 0.4s; background: #fff; }
+@keyframes dotBounce { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.3); opacity: 1; } }
+
+.footer { text-align: center; padding: 24px 20px; font-size: 11px; color: var(--text-light); border-top: 1px solid var(--border); margin-top: 40px; line-height: 2; }
+
+@media (max-width: 480px) {
+  .header-title { font-size: 26px; }
+  .btn-main { font-size: 17px; padding: 16px 40px; }
+  .container { padding: 22px 16px 60px; }
+  .hbtn span { display: none; }
+  .form-section { padding: 24px 18px; }
+  .pro-block { padding: 20px 18px; }
+}
 </style>
 </head>
 <body>
@@ -196,6 +282,10 @@
   <div class="header-label">KEIKEN MIKKE</div>
   <div class="header-title">経験<span>みっけ</span></div>
   <div class="header-sub">あなたの人生経験を、財産に変えよう 🌟</div>
+</div>
+
+<div class="limited-banner">
+  <div class="limited-text">🔥 Pro版 先着限定　残り <strong id="limited-num">30</strong> 名様　¥980（通常¥2,980）</div>
 </div>
 
 <!-- 使い方モーダル -->
@@ -213,7 +303,7 @@
       <ul class="howto-steps">
         <li class="howto-step"><div class="step-num">1</div><div><div class="step-title">💼 4つの質問に答える</div><div class="step-desc">職歴・感謝されたこと・趣味・誇れること。うまく書かなくて大丈夫。思いつくまま書いてください。</div></div></li>
         <li class="howto-step"><div class="step-num">2</div><div><div class="step-title">🔍 「強みを見つける」ボタンを押す</div><div class="step-desc">約3秒で、あなたの強みをキーワードカードとして3枚表示します（無料版）。</div></div></li>
-        <li class="howto-step"><div class="step-num">3</div><div><div class="step-title">🌟 Pro版でさらに深く分析</div><div class="step-desc">パスワードを入力すると、AIが個別に強みを10個以上分析。自己紹介文・収益化アイデア・note記事タイトルも生成されます。</div></div></li>
+        <li class="howto-step"><div class="step-num">3</div><div><div class="step-title">🌟 Pro版でさらに深く分析する</div><div class="step-desc">パスワードを入力すると、AIが個別に強みを10個以上分析。自己紹介文・収益化アイデア・note記事タイトルも生成されます。</div></div></li>
         <li class="howto-step"><div class="step-num">4</div><div><div class="step-title">📋 結果をコピーしてすぐ使う</div><div class="step-desc">自己紹介文はSNS用・名刺用・LINE用の3パターン。コピーボタンでそのまま貼り付けて使えます。</div></div></li>
       </ul>
       <div class="howto-note">💡 ヒント：「設定 → デモデータを入れる」を押すと、サンプルデータで動きをすぐ確認できます。</div>
@@ -235,7 +325,7 @@
         <div class="demo-preview">
           <strong>サンプルデータ（60代・元製造業の方のイメージ）</strong>
           💼 製造会社で30年・品質管理・課長としてチームをまとめた<br>
-          🙏 パソコン設定のサポート・地域の司会進行を頼まれる<br>
+          🙏 パソコン設定サポート・地域の司会進行を頼まれる<br>
           🌱 家庭菜園20年・ゴルフ25年でコースの攻め方を教えるのが好き<br>
           ✨ 経営危機のとき取引先を1から開拓して乗り越えた
         </div>
@@ -243,7 +333,7 @@
           <button class="sbtn sbtn-demo" onclick="loadDemo()">🧪 デモデータを入れる</button>
           <button class="sbtn sbtn-clear" onclick="clearDemo()">🗑️ 入力データをすべてクリアする</button>
         </div>
-        <div class="confirm-msg" id="confirm-ok">✅ デモデータをセットしました！「強みを見つける」ボタンを押してみてください。</div>
+        <div class="confirm-msg ok" id="confirm-ok">✅ デモデータをセットしました！「強みを見つける」ボタンを押してみてください。</div>
         <div class="confirm-msg warn" id="confirm-clear">🗑️ 入力データをクリアしました。</div>
       </div>
     </div>
@@ -253,20 +343,27 @@
 <!-- パスワードモーダル -->
 <div class="modal-overlay" id="pw-modal">
   <div class="pw-modal">
+    <div class="pw-head">
+      <div class="pw-head-icon">🔑</div>
+      <div class="pw-head-title">Pro版を利用する</div>
+      <div class="pw-head-desc">購入後に発行されたパスワードを入力してください。<br>AIがあなたの経験を深く分析します。</div>
+    </div>
     <div class="pw-body">
-      <div class="pw-icon">🔑</div>
-      <div class="pw-title">Pro版を利用する</div>
-      <div class="pw-desc">購入後に発行されたパスワードを入力してください。<br>AIがあなたの経験を深く分析します。</div>
+      <div class="pw-limited">🔥 残り <span id="pw-limited-num">30</span> 名様限定・¥980</div>
       <input type="password" class="pw-input" id="pw-input" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')submitPassword()">
       <div class="pw-error" id="pw-error">❌ パスワードが違います。もう一度お試しください。</div>
       <button class="btn-pw-submit" id="pw-btn" onclick="submitPassword()">✨ Pro版で分析する</button>
-      <div class="pw-note">パスワードをお持ちでない方は<br><a href="https://note.com/_yoshibon" target="_blank">note（@_yoshibon）</a> からご購入いただけます。</div>
+      <div class="pw-note">
+        パスワードをお持ちでない方は<br>
+        <a href="https://note.com/_yoshibon" target="_blank">note（@_yoshibon）</a> からご購入いただけます。
+      </div>
       <button class="btn-pw-cancel" onclick="closeModal('pw-modal')">キャンセル</button>
     </div>
   </div>
 </div>
 
 <div class="container">
+
   <div class="lead-box">
     「自分には特技がない」そう思っていませんか？<br>
     でも、<strong>あなたが今まで生きてきた経験こそが、誰かにとっての宝物</strong>です。<br>
@@ -303,6 +400,23 @@
         <div class="btn-note">所要時間：約3秒 ／ 無料でお試しいただけます</div>
       </div>
     </div>
+
+    <!-- 購入者の声 -->
+    <div class="voices-box">
+      <div class="voices-title">⭐ Pro版をご利用の方の声</div>
+      <div class="voice-item">
+        <div class="voice-text">定年後に何をすべきか悩んでいましたが、自分の強みが10個以上出てきて驚きました。自己紹介文もそのままSNSに使えました。</div>
+        <div class="voice-name">68歳・元営業職 男性</div>
+      </div>
+      <div class="voice-item">
+        <div class="voice-text">趣味の料理教室を開こうと思っていたのですが、収益化アイデアを見て具体的なイメージが湧きました。背中を押してもらえた感じです。</div>
+        <div class="voice-name">62歳・主婦 女性</div>
+      </div>
+      <div class="voice-item">
+        <div class="voice-text">noteに記事を書き始めたいと思っていて、タイトル案が10本出てきたのがとても助かりました。¥980は安すぎると思います。</div>
+        <div class="voice-name">71歳・元教師 男性</div>
+      </div>
+    </div>
   </div>
 
   <div id="loading">
@@ -335,7 +449,10 @@
         <div class="pro-overlay">
           <div class="pro-message">実はあと <span class="count" id="hidden-count">7</span> 個の強みが<br>見つかっています</div>
           <div class="pro-sub">AIが個別に深く分析・自己紹介文・収益化アイデア・note記事タイトルも生成</div>
-          <button class="btn-pro" onclick="openPwModal()">🔑 Pro版で続きを見る</button>
+          <div class="btn-pro-wrap">
+            <button class="btn-pro" onclick="openPwModal()">🔑 Pro版で続きを見る</button>
+            <div class="limited-sub">🔥 残り <span id="result-limited-num">30</span> 名様限定・¥980</div>
+          </div>
         </div>
       </div>
     </div>
@@ -361,46 +478,63 @@
   </div>
 
   <div id="pro-result-area">
-    <div class="pro-result-header">
-      <div class="pro-result-badge">PRO版・AI分析結果</div>
-      <div class="pro-result-title">あなたの<span>すべての強み</span>が<br>見つかりました ✨</div>
-    </div>
-    <div class="pro-block">
-      <div class="pro-block-title">🏆 あなたの強みキーワード</div>
-      <div id="pro-strengths"></div>
-    </div>
-    <div class="pro-block">
-      <div class="pro-block-title">📝 あなたの自己紹介文（3パターン）</div>
-      <div class="intro-tab-wrap">
-        <button class="intro-tab active" onclick="switchTab('sns',this)">SNS用</button>
-        <button class="intro-tab" onclick="switchTab('meishi',this)">名刺用</button>
-        <button class="intro-tab" onclick="switchTab('line',this)">LINE用</button>
+    <div class="pro-report-wrap">
+      <div class="pro-report-header">
+        <div class="pro-report-badge">PRO版・AI分析レポート</div>
+        <div class="pro-report-title">あなたの<span>すべての強み</span>が<br>見つかりました ✨</div>
+        <div class="pro-report-line"></div>
       </div>
-      <div class="intro-content active" id="tab-sns"><div class="intro-text" id="intro-sns"></div><button class="btn-copy" onclick="copyText('intro-sns',this)">📋 コピーする</button></div>
-      <div class="intro-content" id="tab-meishi"><div class="intro-text" id="intro-meishi"></div><button class="btn-copy" onclick="copyText('intro-meishi',this)">📋 コピーする</button></div>
-      <div class="intro-content" id="tab-line"><div class="intro-text" id="intro-line"></div><button class="btn-copy" onclick="copyText('intro-line',this)">📋 コピーする</button></div>
+      <div class="pro-block">
+        <div class="pro-block-title">🏆 あなたの強みキーワード</div>
+        <div id="pro-strengths"></div>
+      </div>
+      <div class="pro-block">
+        <div class="pro-block-title">📝 あなたの自己紹介文（3パターン）</div>
+        <div class="intro-tab-wrap">
+          <button class="intro-tab active" onclick="switchTab('sns',this)">SNS用</button>
+          <button class="intro-tab" onclick="switchTab('meishi',this)">名刺用</button>
+          <button class="intro-tab" onclick="switchTab('line',this)">LINE用</button>
+        </div>
+        <div class="intro-content active" id="tab-sns"><div class="intro-text" id="intro-sns"></div><button class="btn-copy" onclick="copyText('intro-sns',this)">📋 コピーする</button></div>
+        <div class="intro-content" id="tab-meishi"><div class="intro-text" id="intro-meishi"></div><button class="btn-copy" onclick="copyText('intro-meishi',this)">📋 コピーする</button></div>
+        <div class="intro-content" id="tab-line"><div class="intro-text" id="intro-line"></div><button class="btn-copy" onclick="copyText('intro-line',this)">📋 コピーする</button></div>
+      </div>
+      <div class="pro-block">
+        <div class="pro-block-title">💰 収益化アイデア（5つ）</div>
+        <div id="pro-monetize"></div>
+      </div>
+      <div class="pro-block">
+        <div class="pro-block-title">✏️ note記事タイトル案（10本）</div>
+        <div id="pro-note-titles"></div>
+      </div>
     </div>
-    <div class="pro-block">
-      <div class="pro-block-title">💰 収益化アイデア（5つ）</div>
-      <div id="pro-monetize"></div>
-    </div>
-    <div class="pro-block">
-      <div class="pro-block-title">✏️ note記事タイトル案（10本）</div>
-      <div id="pro-note-titles"></div>
-    </div>
-    <div class="retry-wrap">
-      <button class="btn-retry" onclick="retryAll()">🔄 最初からやり直す</button>
+
+    <div class="next-action">
+      <div class="next-action-title">🚀 次のアクションを始めましょう</div>
+      <div class="next-action-btns">
+        <button class="btn-action btn-action-note" onclick="window.open('https://note.com/_yoshibon','_blank')">✏️ noteで記事を書き始める</button>
+        <button class="btn-action btn-action-retry" onclick="retryAll()">🔄 別の内容で再分析する</button>
+      </div>
     </div>
   </div>
+
 </div>
 
 <div class="footer">
-  経験みっけ ｜ Powered by Smile Plus Consulting<br>「考えるを、ひとりにしない」
+  経験みっけ ｜ Powered by Smile Plus Consulting<br>
+  「考えるを、ひとりにしない」
 </div>
 
 <script>
 const WORKER_URL = 'https://keiken-mikke.yymmatsu.workers.dev';
 
+// 残り人数（疑似ランダム：25〜30）
+const LIMITED_NUM = Math.floor(Math.random() * 6) + 25;
+document.getElementById('limited-num').textContent = LIMITED_NUM;
+document.getElementById('result-limited-num').textContent = LIMITED_NUM;
+document.getElementById('pw-limited-num').textContent = LIMITED_NUM;
+
+// 宝探しアニメーション
 const FREE_MSGS = ['あなたの人生経験を読み込んでいます','職歴・趣味・エピソードを分析中...','眠っていた強みを探しています 🔍','宝物が見つかりかけています ✨','あと少しでお見せできます...'];
 const PRO_MSGS  = ['AIがあなたの経験を深く読み込んでいます','強みを10個以上分析しています...','自己紹介文を3パターン生成中...','収益化アイデアを考えています ✨','note記事タイトルを10本生成中...','もう少しで完成します...'];
 const animFrames = {}, msgTimers = {};
@@ -410,302 +544,259 @@ function startTreasureAnim(canvasId, msgId, messages) {
   if (!canvas) return;
   const wrap = canvas.closest('.treasure-loading');
   const ctx = canvas.getContext('2d');
-  function resize() { canvas.width = wrap.offsetWidth || 600; canvas.height = wrap.offsetHeight || 300; }
+  function resize() { canvas.width = wrap.offsetWidth || 600; canvas.height = wrap.offsetHeight || 320; }
   resize();
-  const GOLD = '#D0A900', GOLD2 = '#F5E07A';
+  const GOLD = '#C8A400', GOLD2 = '#F5E07A';
   class Particle {
     constructor() { this.reset(true); }
     reset(init) {
-      this.x = Math.random() * canvas.width;
-      this.y = init ? Math.random() * canvas.height : canvas.height + 10;
-      this.size = Math.random() * 2.5 + 0.8;
-      this.speedX = (Math.random() - 0.5) * 0.5;
-      this.speedY = -(Math.random() * 0.7 + 0.2);
-      this.life = init ? Math.floor(Math.random() * 100) : 0;
-      this.maxLife = Math.random() * 110 + 60;
-      this.isStar = Math.random() < 0.45;
-      this.color = Math.random() < 0.5 ? GOLD : (Math.random() < 0.5 ? GOLD2 : '#fff');
+      this.x = Math.random()*canvas.width; this.y = init ? Math.random()*canvas.height : canvas.height+10;
+      this.size = Math.random()*2.5+0.8; this.speedX = (Math.random()-0.5)*0.5; this.speedY = -(Math.random()*0.7+0.2);
+      this.life = init ? Math.floor(Math.random()*100) : 0; this.maxLife = Math.random()*110+60;
+      this.isStar = Math.random()<0.45; this.color = Math.random()<0.5 ? GOLD : (Math.random()<0.5 ? GOLD2 : '#fff');
     }
-    update() { this.x += this.speedX; this.y += this.speedY; this.life++; if (this.life > this.maxLife) this.reset(false); }
+    update() { this.x+=this.speedX; this.y+=this.speedY; this.life++; if(this.life>this.maxLife) this.reset(false); }
     draw() {
-      const alpha = Math.sin((this.life / this.maxLife) * Math.PI) * 0.85;
-      ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = this.color;
-      if (this.isStar) {
-        ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.life * 0.05);
-        const s = this.size * 1.5; ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          const a = (i/4)*Math.PI*2, b = a+Math.PI/4;
-          i===0 ? ctx.moveTo(Math.cos(a)*s, Math.sin(a)*s) : ctx.lineTo(Math.cos(a)*s, Math.sin(a)*s);
-          ctx.lineTo(Math.cos(b)*s*0.35, Math.sin(b)*s*0.35);
-        }
+      const alpha = Math.sin((this.life/this.maxLife)*Math.PI)*0.85;
+      ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle=this.color;
+      if(this.isStar){
+        ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.life*0.05);
+        const s=this.size*1.5; ctx.beginPath();
+        for(let i=0;i<4;i++){const a=(i/4)*Math.PI*2,b=a+Math.PI/4; i===0?ctx.moveTo(Math.cos(a)*s,Math.sin(a)*s):ctx.lineTo(Math.cos(a)*s,Math.sin(a)*s); ctx.lineTo(Math.cos(b)*s*0.35,Math.sin(b)*s*0.35);}
         ctx.closePath(); ctx.fill(); ctx.restore();
-      } else { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill(); }
+      } else { ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
       ctx.restore();
     }
   }
   class GemFloat {
     constructor() { this.reset(); }
     reset() {
-      this.x = Math.random()*canvas.width; this.y = canvas.height+15;
-      this.size = Math.random()*9+5; this.speed = Math.random()*0.45+0.18;
-      this.wobble = Math.random()*Math.PI*2; this.wobbleSpeed = (Math.random()-0.5)*0.025;
-      this.color = [GOLD,GOLD2,'#fff','#aaddff'][Math.floor(Math.random()*4)]; this.alpha = 0;
+      this.x=Math.random()*canvas.width; this.y=canvas.height+15; this.size=Math.random()*9+5;
+      this.speed=Math.random()*0.45+0.18; this.wobble=Math.random()*Math.PI*2; this.wobbleSpeed=(Math.random()-0.5)*0.025;
+      this.color=[GOLD,GOLD2,'#fff','#aaddff'][Math.floor(Math.random()*4)]; this.alpha=0;
     }
     update() {
-      this.y -= this.speed; this.wobble += this.wobbleSpeed; this.x += Math.sin(this.wobble)*0.35;
-      if (this.y > canvas.height*0.35) this.alpha = Math.min(1, this.alpha+0.018); else this.alpha -= 0.013;
-      if (this.alpha <= 0 || this.y < -15) this.reset();
+      this.y-=this.speed; this.wobble+=this.wobbleSpeed; this.x+=Math.sin(this.wobble)*0.35;
+      if(this.y>canvas.height*0.35) this.alpha=Math.min(1,this.alpha+0.018); else this.alpha-=0.013;
+      if(this.alpha<=0||this.y<-15) this.reset();
     }
     draw() {
-      ctx.save(); ctx.globalAlpha = this.alpha*0.7; ctx.translate(this.x, this.y); ctx.fillStyle = this.color;
-      const s = this.size; ctx.beginPath();
-      ctx.moveTo(0,-s); ctx.lineTo(s*0.6,-s*0.2); ctx.lineTo(s*0.6,s*0.4);
-      ctx.lineTo(0,s); ctx.lineTo(-s*0.6,s*0.4); ctx.lineTo(-s*0.6,-s*0.2);
+      ctx.save(); ctx.globalAlpha=this.alpha*0.7; ctx.translate(this.x,this.y); ctx.fillStyle=this.color;
+      const s=this.size; ctx.beginPath();
+      ctx.moveTo(0,-s); ctx.lineTo(s*0.6,-s*0.2); ctx.lineTo(s*0.6,s*0.4); ctx.lineTo(0,s); ctx.lineTo(-s*0.6,s*0.4); ctx.lineTo(-s*0.6,-s*0.2);
       ctx.closePath(); ctx.fill(); ctx.restore();
     }
   }
-  const particles = Array.from({length:55}, ()=>new Particle());
-  const gems = Array.from({length:10}, ()=>new GemFloat());
-  gems.forEach(g => { g.y = Math.random()*canvas.height; g.alpha = Math.random()*0.5; });
-  function loop() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{p.update();p.draw();});
-    gems.forEach(g=>{g.update();g.draw();});
-    animFrames[canvasId] = requestAnimationFrame(loop);
-  }
+  const particles=Array.from({length:55},()=>new Particle());
+  const gems=Array.from({length:10},()=>new GemFloat());
+  gems.forEach(g=>{g.y=Math.random()*canvas.height; g.alpha=Math.random()*0.5;});
+  function loop(){ ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); gems.forEach(g=>{g.update();g.draw();}); animFrames[canvasId]=requestAnimationFrame(loop); }
   loop();
-  const msgEl = document.getElementById(msgId); let mi = 0;
-  msgTimers[canvasId] = setInterval(() => {
-    if (!msgEl) return;
-    mi = (mi+1) % messages.length;
-    msgEl.style.opacity = '0';
-    setTimeout(() => { msgEl.textContent = messages[mi]; msgEl.style.opacity = '1'; }, 350);
-  }, 2000);
+  const msgEl=document.getElementById(msgId); let mi=0;
+  msgTimers[canvasId]=setInterval(()=>{
+    if(!msgEl) return; mi=(mi+1)%messages.length;
+    msgEl.style.opacity='0';
+    setTimeout(()=>{msgEl.textContent=messages[mi]; msgEl.style.opacity='1';},350);
+  },2000);
 }
-function stopTreasureAnim(canvasId) {
-  if (animFrames[canvasId]) { cancelAnimationFrame(animFrames[canvasId]); delete animFrames[canvasId]; }
-  if (msgTimers[canvasId])  { clearInterval(msgTimers[canvasId]); delete msgTimers[canvasId]; }
+function stopTreasureAnim(canvasId){
+  if(animFrames[canvasId]){cancelAnimationFrame(animFrames[canvasId]); delete animFrames[canvasId];}
+  if(msgTimers[canvasId]){clearInterval(msgTimers[canvasId]); delete msgTimers[canvasId];}
 }
 
+// デモデータ
 const DEMO = {
-  q1: '地元の製造会社で30年、品質管理の仕事をしていました。最後は課長として10人のチームをまとめていました。',
-  q2: '近所のお年寄りのパソコン設定を手伝うと、とても喜ばれました。地域の会合で司会進行を頼まれることも多かったです。',
-  q3: '家庭菜園を20年以上やっています。ゴルフも25年やっていて、コースの攻め方を教えるのが好きです。',
-  q4: '会社が経営危機のとき、取引先を1から開拓して乗り越えました。子育てしながら夜間学校に通い資格も取りました。'
+  q1:'地元の製造会社で30年、品質管理の仕事をしていました。最後は課長として10人のチームをまとめていました。',
+  q2:'近所のお年寄りのパソコン設定を手伝うと、とても喜ばれました。地域の会合で司会進行を頼まれることも多かったです。',
+  q3:'家庭菜園を20年以上やっています。ゴルフも25年やっていて、コースの攻め方を教えるのが好きです。',
+  q4:'会社が経営危機のとき、取引先を1から開拓して乗り越えました。子育てしながら夜間学校に通い資格も取りました。'
 };
 
-function openHowto() { document.getElementById('howto-modal').classList.add('open'); }
-function openSettings() { hideConfirm(); document.getElementById('settings-modal').classList.add('open'); }
-function openPwModal() {
-  document.getElementById('pw-input').value = '';
-  document.getElementById('pw-error').style.display = 'none';
+function openHowto(){ document.getElementById('howto-modal').classList.add('open'); }
+function openSettings(){ hideConfirm(); document.getElementById('settings-modal').classList.add('open'); }
+function openPwModal(){
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-error').style.display='none';
   document.getElementById('pw-input').classList.remove('error');
-  document.getElementById('pw-btn').textContent = '✨ Pro版で分析する';
-  document.getElementById('pw-btn').disabled = false;
+  document.getElementById('pw-btn').textContent='✨ Pro版で分析する';
+  document.getElementById('pw-btn').disabled=false;
   document.getElementById('pw-modal').classList.add('open');
-  setTimeout(() => document.getElementById('pw-input').focus(), 300);
+  setTimeout(()=>document.getElementById('pw-input').focus(),300);
 }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(el=>{
+  el.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 });
 
-function loadDemo() {
-  document.getElementById('q1').value = DEMO.q1;
-  document.getElementById('q2').value = DEMO.q2;
-  document.getElementById('q3').value = DEMO.q3;
-  document.getElementById('q4').value = DEMO.q4;
+function loadDemo(){
+  ['q1','q2','q3','q4'].forEach(id=>document.getElementById(id).value=DEMO[id]);
   showConfirm('confirm-ok');
-  document.getElementById('result-area').style.display = 'none';
-  document.getElementById('pro-result-area').style.display = 'none';
-  document.getElementById('form-area').style.display = 'block';
+  document.getElementById('result-area').style.display='none';
+  document.getElementById('pro-result-area').style.display='none';
+  document.getElementById('form-area').style.display='block';
 }
-function clearDemo() {
-  ['q1','q2','q3','q4'].forEach(id => document.getElementById(id).value = '');
+function clearDemo(){
+  ['q1','q2','q3','q4'].forEach(id=>document.getElementById(id).value='');
   showConfirm('confirm-clear');
 }
-function showConfirm(id) {
+function showConfirm(id){
   hideConfirm();
-  document.getElementById(id).style.display = 'block';
-  setTimeout(() => document.getElementById(id).style.display = 'none', 3500);
+  document.getElementById(id).style.display='block';
+  setTimeout(()=>document.getElementById(id).style.display='none',3500);
 }
-function hideConfirm() {
-  document.getElementById('confirm-ok').style.display = 'none';
-  document.getElementById('confirm-clear').style.display = 'none';
+function hideConfirm(){
+  document.getElementById('confirm-ok').style.display='none';
+  document.getElementById('confirm-clear').style.display='none';
 }
 
 const KEYWORDS = {
-  management: { words: ['管理','リーダー','課長','部長','チーム','まとめ','指導','育成','監督'], results: [{ kw: '🏆 人を動かす力', desc: 'チームをまとめ、目標に向かって人を引っ張る力があります。コーチングや管理職サポートとして今も活かせます。' },{ kw: '🎯 問題解決の実行力', desc: '現場で起きる問題を解決してきた経験は、コンサルティングや相談業として大きな価値になります。' }] },
-  teaching: { words: ['教え','伝え','説明','サポート','手伝','アドバイス','相談'], results: [{ kw: '🌸 伝える・教える力', desc: 'わかりやすく伝えることへの自然な才能があります。教える・伝えるは今の時代に最も求められているスキルです。' }] },
-  craft: { words: ['ものづくり','製造','品質','丁寧','こだわり','技術','職人','工夫'], results: [{ kw: '🔧 ものを生み出す力', desc: '丁寧さとこだわりから生まれた技術力は、あなただけのオリジナルな価値です。作品販売やワークショップに展開できます。' }] },
-  social: { words: ['地域','つながり','コミュニティ','ボランティア','会合','人脈','仲間','交流'], results: [{ kw: '🤝 人をつなぐ力', desc: '地域や人との深いつながりを作ってきた力は、コミュニティ運営やコーディネーターとして輝けるスキルです。' }] },
-  resilience: { words: ['乗り越え','苦労','失敗','立ち直','挑戦','困難','壁','開拓'], results: [{ kw: '💪 逆境を乗り越えた経験', desc: '苦しい経験を乗り越えてきたことは、同じ境遇の人への最強のメッセージになります。体験談は誰にも書けない財産です。' }] },
-  hobby: { words: ['趣味','ゴルフ','料理','園芸','旅行','音楽','読書','写真','釣り','登山','家庭菜園'], results: [{ kw: '🌱 深い趣味の専門知識', desc: '長年続けてきた趣味は、初心者が最も「教えてほしい」と思う専門知識の宝庫です。ブログや動画でも発信できます。' }] },
-  default: [{ kw: '✨ 人生経験という財産', desc: '積み重ねてきた年月は、若い世代が持ちえない本物の知恵です。その経験談自体が価値になります。' },{ kw: '📖 語れるストーリー', desc: 'あなたの経験には、誰かの背中を押す力があります。話す・書くだけで人の役に立てます。' },{ kw: '🎓 継続してきた実績', desc: '何かを長年続けてきたこと自体が、信頼の証です。継続力と安定感は最大の強みのひとつです。' }]
+  management:{words:['管理','リーダー','課長','部長','チーム','まとめ','指導','育成','監督'],results:[{kw:'🏆 人を動かす力',desc:'チームをまとめ、目標に向かって人を引っ張る力があります。コーチングや管理職サポートとして今も活かせます。'},{kw:'🎯 問題解決の実行力',desc:'現場で起きる問題を解決してきた経験は、コンサルティングや相談業として大きな価値になります。'}]},
+  teaching:{words:['教え','伝え','説明','サポート','手伝','アドバイス','相談'],results:[{kw:'🌸 伝える・教える力',desc:'わかりやすく伝えることへの自然な才能があります。教える・伝えるは今の時代に最も求められているスキルです。'}]},
+  craft:{words:['ものづくり','製造','品質','丁寧','こだわり','技術','職人','工夫'],results:[{kw:'🔧 ものを生み出す力',desc:'丁寧さとこだわりから生まれた技術力は、あなただけのオリジナルな価値です。作品販売やワークショップに展開できます。'}]},
+  social:{words:['地域','つながり','コミュニティ','ボランティア','会合','人脈','仲間','交流'],results:[{kw:'🤝 人をつなぐ力',desc:'地域や人との深いつながりを作ってきた力は、コミュニティ運営やコーディネーターとして輝けるスキルです。'}]},
+  resilience:{words:['乗り越え','苦労','失敗','立ち直','挑戦','困難','壁','開拓'],results:[{kw:'💪 逆境を乗り越えた経験',desc:'苦しい経験を乗り越えてきたことは、同じ境遇の人への最強のメッセージになります。体験談は誰にも書けない財産です。'}]},
+  hobby:{words:['趣味','ゴルフ','料理','園芸','旅行','音楽','読書','写真','釣り','登山','家庭菜園'],results:[{kw:'🌱 深い趣味の専門知識',desc:'長年続けてきた趣味は、初心者が最も「教えてほしい」と思う専門知識の宝庫です。ブログや動画でも発信できます。'}]},
+  default:[{kw:'✨ 人生経験という財産',desc:'積み重ねてきた年月は、若い世代が持ちえない本物の知恵です。その経験談自体が価値になります。'},{kw:'📖 語れるストーリー',desc:'あなたの経験には、誰かの背中を押す力があります。話す・書くだけで人の役に立てます。'},{kw:'🎓 継続してきた実績',desc:'何かを長年続けてきたこと自体が、信頼の証です。継続力と安定感は最大の強みのひとつです。'}]
 };
-const HINTS = [
-  '📝 まずは「note」に自分の経験談を1本書いてみましょう。読んだ人から共感が生まれます。',
-  '🎙️ 地域の生涯学習センターや公民館で、得意なことを1時間話す「プチ講座」から始めてみましょう。',
-  '💬 SNSで「〇〇年やってわかったこと」を週1回投稿するだけで、フォロワーが増え始めます。',
-  '🤝 知人や友人の困りごとを無料で相談に乗るところからスタートすると、自然に口コミが広がります。',
-];
-function getRandomItems(arr, n) { return [...arr].sort(() => Math.random() - 0.5).slice(0, n); }
+const HINTS=['📝 まずは「note」に自分の経験談を1本書いてみましょう。読んだ人から共感が生まれます。','🎙️ 地域の生涯学習センターや公民館で、得意なことを1時間話す「プチ講座」から始めてみましょう。','💬 SNSで「〇〇年やってわかったこと」を週1回投稿するだけで、フォロワーが増え始めます。','🤝 知人や友人の困りごとを無料で相談に乗るところからスタートすると、自然に口コミが広がります。'];
+function getRandomItems(arr,n){return[...arr].sort(()=>Math.random()-0.5).slice(0,n);}
 
-let savedInputs = {};
+let savedInputs={};
 
-function analyze() {
-  const q1 = document.getElementById('q1').value.trim();
-  const q2 = document.getElementById('q2').value.trim();
-  const q3 = document.getElementById('q3').value.trim();
-  const q4 = document.getElementById('q4').value.trim();
-  if (!q1 && !q2 && !q3 && !q4) {
-    alert('少しでも構いません。まず1つ入力してみてください 😊\n\n「設定→デモデータを入れる」でサンプルも確認できます。');
-    return;
-  }
-  savedInputs = { q1, q2, q3, q4 };
-  const allText = (q1+q2+q3+q4).toLowerCase();
-  document.getElementById('form-area').style.display = 'none';
-  document.getElementById('loading').style.display = 'block';
-  setTimeout(() => startTreasureAnim('tl-canvas-free', 'tl-msg-free', FREE_MSGS), 50);
-  setTimeout(() => {
+function analyze(){
+  const q1=document.getElementById('q1').value.trim();
+  const q2=document.getElementById('q2').value.trim();
+  const q3=document.getElementById('q3').value.trim();
+  const q4=document.getElementById('q4').value.trim();
+  if(!q1&&!q2&&!q3&&!q4){alert('少しでも構いません。まず1つ入力してみてください 😊\n\n「設定→デモデータを入れる」でサンプルも確認できます。');return;}
+  savedInputs={q1,q2,q3,q4};
+  const allText=(q1+q2+q3+q4).toLowerCase();
+  document.getElementById('form-area').style.display='none';
+  document.getElementById('loading').style.display='block';
+  setTimeout(()=>startTreasureAnim('tl-canvas-free','tl-msg-free',FREE_MSGS),50);
+  setTimeout(()=>{
     stopTreasureAnim('tl-canvas-free');
-    let matched = [];
-    for (const key of Object.keys(KEYWORDS)) {
-      if (key === 'default') continue;
-      if (KEYWORDS[key].words.some(w => allText.includes(w))) matched.push(...KEYWORDS[key].results);
+    let matched=[];
+    for(const key of Object.keys(KEYWORDS)){
+      if(key==='default') continue;
+      if(KEYWORDS[key].words.some(w=>allText.includes(w))) matched.push(...KEYWORDS[key].results);
     }
-    for (const d of KEYWORDS.default) { if (matched.length >= 3) break; matched.push(d); }
-    const free3 = getRandomItems(matched.length >= 3 ? matched : [...matched, ...KEYWORDS.default], 3);
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('result-area').style.display = 'block';
-    document.getElementById('hidden-count').textContent = Math.floor(Math.random()*4)+6;
-    const container = document.getElementById('cards-free');
-    container.innerHTML = '';
-    free3.forEach((item, i) => {
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.style.animationDelay = `${i*0.12}s`;
-      card.innerHTML = `<div class="card-keyword">${item.kw}</div><div class="card-desc">${item.desc}</div>`;
+    for(const d of KEYWORDS.default){if(matched.length>=3) break; matched.push(d);}
+    const free3=getRandomItems(matched.length>=3?matched:[...matched,...KEYWORDS.default],3);
+    document.getElementById('loading').style.display='none';
+    document.getElementById('result-area').style.display='block';
+    document.getElementById('hidden-count').textContent=Math.floor(Math.random()*4)+6;
+    const container=document.getElementById('cards-free');
+    container.innerHTML='';
+    free3.forEach((item,i)=>{
+      const card=document.createElement('div');
+      card.className='card'; card.style.animationDelay=`${i*0.12}s`;
+      card.innerHTML=`<div class="card-keyword">${item.kw}</div><div class="card-desc">${item.desc}</div>`;
       container.appendChild(card);
     });
-    document.getElementById('hint-content').innerHTML = `<div class="hint-item">${HINTS[Math.floor(Math.random()*HINTS.length)]}</div>`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 2800);
+    document.getElementById('hint-content').innerHTML=`<div class="hint-item">${HINTS[Math.floor(Math.random()*HINTS.length)]}</div>`;
+    window.scrollTo({top:0,behavior:'smooth'});
+  },2800);
 }
 
-async function submitPassword() {
-  const password = document.getElementById('pw-input').value.trim();
-  if (!password) { document.getElementById('pw-input').focus(); return; }
-  const btn = document.getElementById('pw-btn');
-  btn.textContent = '確認中...';
-  btn.disabled = true;
-  document.getElementById('pw-error').style.display = 'none';
+async function submitPassword(){
+  const password=document.getElementById('pw-input').value.trim();
+  if(!password){document.getElementById('pw-input').focus();return;}
+  const btn=document.getElementById('pw-btn');
+  btn.textContent='確認中...'; btn.disabled=true;
+  document.getElementById('pw-error').style.display='none';
   document.getElementById('pw-input').classList.remove('error');
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        password,
-        q1: savedInputs.q1 || '',
-        q2: savedInputs.q2 || '',
-        q3: savedInputs.q3 || '',
-        q4: savedInputs.q4 || ''
-      })
+  try{
+    const res=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({password,q1:savedInputs.q1||'',q2:savedInputs.q2||'',q3:savedInputs.q3||'',q4:savedInputs.q4||''})
     });
-    if (res.status === 401) {
-      document.getElementById('pw-error').style.display = 'block';
+    if(res.status===401){
+      document.getElementById('pw-error').style.display='block';
       document.getElementById('pw-input').classList.add('error');
-      btn.textContent = '✨ Pro版で分析する';
-      btn.disabled = false;
+      btn.textContent='✨ Pro版で分析する'; btn.disabled=false;
       return;
     }
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      document.getElementById('pw-error').textContent = '❌ ' + (err.error || 'エラーが発生しました。もう一度お試しください。');
-      document.getElementById('pw-error').style.display = 'block';
-      btn.textContent = '✨ Pro版で分析する';
-      btn.disabled = false;
+    if(!res.ok){
+      const err=await res.json().catch(()=>({}));
+      document.getElementById('pw-error').textContent='❌ '+(err.error||'エラーが発生しました。もう一度お試しください。');
+      document.getElementById('pw-error').style.display='block';
+      btn.textContent='✨ Pro版で分析する'; btn.disabled=false;
       return;
     }
-    const data = await res.json();
+    const data=await res.json();
     closeModal('pw-modal');
     showProResult(data);
-  } catch(e) {
-    document.getElementById('pw-error').textContent = '❌ 通信エラーが発生しました。もう一度お試しください。';
-    document.getElementById('pw-error').style.display = 'block';
-    btn.textContent = '✨ Pro版で分析する';
-    btn.disabled = false;
+  }catch(e){
+    document.getElementById('pw-error').textContent='❌ 通信エラーが発生しました。もう一度お試しください。';
+    document.getElementById('pw-error').style.display='block';
+    btn.textContent='✨ Pro版で分析する'; btn.disabled=false;
   }
 }
 
-function showProResult(data) {
-  document.getElementById('result-area').style.display = 'none';
-  document.getElementById('pro-loading').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(() => startTreasureAnim('tl-canvas-pro', 'tl-msg-pro', PRO_MSGS), 50);
-  setTimeout(() => {
+function showProResult(data){
+  document.getElementById('result-area').style.display='none';
+  document.getElementById('pro-loading').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>startTreasureAnim('tl-canvas-pro','tl-msg-pro',PRO_MSGS),50);
+  setTimeout(()=>{
     stopTreasureAnim('tl-canvas-pro');
-    document.getElementById('pro-loading').style.display = 'none';
-    document.getElementById('pro-result-area').style.display = 'block';
-    const sc = document.getElementById('pro-strengths');
-    sc.innerHTML = '';
-    (data.strengths || []).forEach((s, i) => {
-      const el = document.createElement('div');
-      el.className = 'pro-strength-card';
-      el.style.animationDelay = `${i*0.07}s`;
-      el.innerHTML = `<div class="pro-strength-emoji">${s.emoji||'✨'}</div><div><div class="pro-strength-kw">${s.keyword}</div><div class="pro-strength-reason">${s.reason}</div></div>`;
+    document.getElementById('pro-loading').style.display='none';
+    document.getElementById('pro-result-area').style.display='block';
+    const sc=document.getElementById('pro-strengths');
+    sc.innerHTML='';
+    (data.strengths||[]).forEach((s,i)=>{
+      const el=document.createElement('div');
+      el.className='pro-strength-card'; el.style.animationDelay=`${i*0.07}s`;
+      el.innerHTML=`<div class="pro-strength-emoji">${s.emoji||'✨'}</div><div><div class="pro-strength-kw">${s.keyword}</div><div class="pro-strength-reason">${s.reason}</div></div>`;
       sc.appendChild(el);
     });
-    const intro = data.introductions || {};
-    document.getElementById('intro-sns').textContent    = intro.sns    || '';
-    document.getElementById('intro-meishi').textContent = intro.meishi || '';
-    document.getElementById('intro-line').textContent   = intro.line   || '';
-    const mc = document.getElementById('pro-monetize');
-    mc.innerHTML = '';
-    (data.monetize || []).forEach((m, i) => {
-      const el = document.createElement('div');
-      el.className = 'monetize-item';
-      el.style.animationDelay = `${i*0.08}s`;
-      el.innerHTML = `<div class="monetize-title">💡 ${m.title}</div><div class="monetize-desc">${m.desc}</div>`;
+    const intro=data.introductions||{};
+    document.getElementById('intro-sns').textContent=intro.sns||'';
+    document.getElementById('intro-meishi').textContent=intro.meishi||'';
+    document.getElementById('intro-line').textContent=intro.line||'';
+    const mc=document.getElementById('pro-monetize');
+    mc.innerHTML='';
+    (data.monetize||[]).forEach((m,i)=>{
+      const el=document.createElement('div');
+      el.className='monetize-item'; el.style.animationDelay=`${i*0.08}s`;
+      el.innerHTML=`<div class="monetize-title">💡 ${m.title}</div><div class="monetize-desc">${m.desc}</div>`;
       mc.appendChild(el);
     });
-    const nc = document.getElementById('pro-note-titles');
-    nc.innerHTML = '';
-    (data.note_titles || []).forEach((t, i) => {
-      const el = document.createElement('div');
-      el.className = 'note-title-item';
-      el.style.animationDelay = `${i*0.06}s`;
-      el.innerHTML = `<div class="note-num">${i+1}</div><div>${t}</div>`;
+    const nc=document.getElementById('pro-note-titles');
+    nc.innerHTML='';
+    (data.note_titles||[]).forEach((t,i)=>{
+      const el=document.createElement('div');
+      el.className='note-title-item'; el.style.animationDelay=`${i*0.06}s`;
+      el.innerHTML=`<div class="note-num">${i+1}</div><div>${t}</div>`;
       nc.appendChild(el);
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 1500);
+    window.scrollTo({top:0,behavior:'smooth'});
+  },1500);
 }
 
-function switchTab(type, btn) {
-  document.querySelectorAll('.intro-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.intro-content').forEach(c => c.classList.remove('active'));
+function switchTab(type,btn){
+  document.querySelectorAll('.intro-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.intro-content').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('tab-' + type).classList.add('active');
+  document.getElementById('tab-'+type).classList.add('active');
 }
-function copyText(id, btn) {
-  const text = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '✅ コピーしました！';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '📋 コピーする'; btn.classList.remove('copied'); }, 2000);
+function copyText(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='✅ コピーしました！'; btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 コピーする'; btn.classList.remove('copied');},2000);
   });
 }
-function retry() {
-  document.getElementById('result-area').style.display = 'none';
-  document.getElementById('form-area').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function retry(){
+  document.getElementById('result-area').style.display='none';
+  document.getElementById('form-area').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function retryAll() {
-  document.getElementById('pro-result-area').style.display = 'none';
-  document.getElementById('form-area').style.display = 'block';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function retryAll(){
+  document.getElementById('pro-result-area').style.display='none';
+  document.getElementById('form-area').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
