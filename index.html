@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>経験みっけ｜あなたの人生経験を財産に変える</title>
 <link rel="icon" type="image/png" href="https://spc-jp.github.io/keiken-mikke/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy: #223670;
@@ -19,652 +20,178 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans JP', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
 
-  /* ========== ヘッダー ========== */
-  .header {
-    background: var(--navy);
-    padding: 16px 20px 16px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 150px; height: 150px;
-    border-radius: 50%;
-    background: rgba(208,169,0,0.15);
-  }
-  .header-btns {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    position: relative;
-    z-index: 10;
-  }
-  .hbtn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: #fff;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 12px;
-    padding: 6px 13px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background 0.2s;
-    letter-spacing: 0.5px;
-  }
+  .header { background: var(--navy); padding: 16px 20px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 150px; height: 150px; border-radius: 50%; background: rgba(208,169,0,0.15); }
+  .header-btns { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; position: relative; z-index: 10; }
+  .hbtn { display: flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-family: 'Noto Sans JP', sans-serif; font-size: 12px; padding: 6px 13px; border-radius: 20px; cursor: pointer; transition: background 0.2s; }
   .hbtn:hover { background: rgba(255,255,255,0.22); }
-  .hbtn .icon { font-size: 14px; }
-  .header-label {
-    font-family: 'Noto Serif JP', serif;
-    color: var(--gold);
-    font-size: 11px;
-    letter-spacing: 4px;
-    margin-bottom: 6px;
-  }
-  .header-title {
-    font-family: 'Noto Serif JP', serif;
-    color: #fff;
-    font-size: 28px;
-    font-weight: 900;
-    letter-spacing: 2px;
-  }
+  .header-label { font-family: 'Noto Serif JP', serif; color: var(--gold); font-size: 11px; letter-spacing: 4px; margin-bottom: 6px; }
+  .header-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 28px; font-weight: 900; letter-spacing: 2px; }
   .header-title span { color: var(--gold); }
   .header-sub { color: rgba(255,255,255,0.7); font-size: 13px; margin-top: 6px; }
 
-  /* ========== モーダル共通 ========== */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(10,15,40,0.65);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,15,40,0.65); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: #fff;
-    border-radius: 18px;
-    width: 100%;
-    max-width: 520px;
-    max-height: 88vh;
-    overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(10,15,40,0.3);
-    animation: modalIn 0.25s ease;
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .modal-head {
-    background: var(--navy);
-    padding: 18px 22px;
-    border-radius: 18px 18px 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-  .modal-head-title {
-    font-family: 'Noto Serif JP', serif;
-    color: #fff;
-    font-size: 17px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .modal-close {
-    background: rgba(255,255,255,0.15);
-    border: none;
-    color: #fff;
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
-  }
+  .modal { background: #fff; border-radius: 18px; width: 100%; max-width: 520px; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(10,15,40,0.3); animation: modalIn 0.25s ease; }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .modal-head { background: var(--navy); padding: 18px 22px; border-radius: 18px 18px 0 0; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 2; }
+  .modal-head-title { font-family: 'Noto Serif JP', serif; color: #fff; font-size: 17px; font-weight: 700; }
+  .modal-close { background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .modal-close:hover { background: rgba(255,255,255,0.3); }
   .modal-body { padding: 24px 22px; }
 
-  /* ========== 使い方モーダル ========== */
-  .howto-intro {
-    background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%);
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin-bottom: 20px;
-    border-left: 4px solid var(--navy);
-  }
+  .howto-intro { background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%); border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; border-left: 4px solid var(--navy); }
   .howto-intro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
   .howto-intro-text { font-size: 13px; color: var(--text-mid); line-height: 1.8; }
   .howto-steps { list-style: none; }
   .howto-step { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px dashed #E0D8C8; }
   .howto-step:last-child { border-bottom: none; }
-  .step-num {
-    flex-shrink: 0;
-    width: 30px; height: 30px;
-    background: var(--gold);
-    color: #fff;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 14px;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .step-num { flex-shrink: 0; width: 30px; height: 30px; background: var(--gold); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
   .step-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .step-desc { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
-  .howto-note {
-    background: #FFFBEA;
-    border: 1px solid var(--gold-light);
-    border-radius: 10px;
-    padding: 12px 16px;
-    margin-top: 18px;
-    font-size: 12px;
-    color: var(--text-mid);
-    line-height: 1.8;
-  }
+  .howto-note { background: #FFFBEA; border: 1px solid var(--gold-light); border-radius: 10px; padding: 12px 16px; margin-top: 18px; font-size: 12px; color: var(--text-mid); line-height: 1.8; }
 
-  /* ========== 設定モーダル ========== */
   .setting-section { margin-bottom: 22px; }
   .setting-section-title { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
   .setting-desc { font-size: 12px; color: var(--text-light); margin-bottom: 14px; line-height: 1.7; }
-  .demo-preview {
-    background: var(--warm-gray);
-    border-radius: 10px;
-    padding: 14px 16px;
-    margin-bottom: 14px;
-    font-size: 12px;
-    color: var(--text-mid);
-    line-height: 1.8;
-    border: 1px solid #E0D8C8;
-  }
+  .demo-preview { background: var(--warm-gray); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; font-size: 12px; color: var(--text-mid); line-height: 1.8; border: 1px solid #E0D8C8; }
   .demo-preview strong { color: var(--navy); display: block; margin-bottom: 4px; font-size: 13px; }
   .setting-btns { display: flex; flex-direction: column; gap: 10px; }
-  .sbtn {
-    width: 100%;
-    padding: 13px 20px;
-    border-radius: 10px;
-    border: none;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
+  .sbtn { width: 100%; padding: 13px 20px; border-radius: 10px; border: none; font-family: 'Noto Sans JP', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
   .sbtn:hover { transform: translateY(-1px); }
   .sbtn-demo { background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%); color: #fff; box-shadow: 0 4px 14px rgba(208,169,0,0.3); }
   .sbtn-clear { background: #fff; color: #c0392b; border: 2px solid #e8b4b0; }
-  .sbtn-clear:hover { background: #FFF5F5; }
-  .confirm-msg {
-    display: none;
-    background: #E8F5E9;
-    border: 1px solid #A5D6A7;
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #2E7D32;
-    margin-top: 12px;
-    text-align: center;
-  }
+  .confirm-msg { display: none; background: #E8F5E9; border: 1px solid #A5D6A7; border-radius: 8px; padding: 10px 14px; font-size: 13px; color: #2E7D32; margin-top: 12px; text-align: center; }
   .confirm-msg.warn { background: #FFF3E0; border-color: #FFCC80; color: #E65100; }
 
-  /* ========== メインコンテナ ========== */
   .container { max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
-  .lead-box {
-    background: #fff;
-    border-left: 4px solid var(--gold);
-    border-radius: 0 12px 12px 0;
-    padding: 18px 20px;
-    margin-bottom: 28px;
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--text-mid);
-  }
+  .lead-box { background: #fff; border-left: 4px solid var(--gold); border-radius: 0 12px 12px 0; padding: 18px 20px; margin-bottom: 28px; font-size: 15px; line-height: 1.8; color: var(--text-mid); }
   .lead-box strong { color: var(--navy); font-weight: 700; }
-  .form-section {
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px 24px;
-    box-shadow: 0 4px 20px rgba(34,54,112,0.08);
-    margin-bottom: 24px;
-  }
-  .section-num {
-    display: inline-block;
-    background: var(--navy);
-    color: #fff;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-    padding: 3px 12px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-  }
+  .form-section { background: #fff; border-radius: 16px; padding: 28px 24px; box-shadow: 0 4px 20px rgba(34,54,112,0.08); margin-bottom: 24px; }
+  .section-num { display: inline-block; background: var(--navy); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 2px; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
   .section-title { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .section-hint { font-size: 12px; color: var(--text-light); margin-bottom: 18px; line-height: 1.6; }
   .q-block { margin-bottom: 20px; }
   .q-label { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
   .q-sub { font-size: 12px; color: var(--text-light); margin-bottom: 8px; line-height: 1.5; }
-  textarea {
-    width: 100%;
-    border: 2px solid #E8E4DA;
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-dark);
-    resize: vertical;
-    transition: border-color 0.2s;
-    background: #FDFBF7;
-  }
+  textarea { width: 100%; border: 2px solid #E8E4DA; border-radius: 10px; padding: 12px 14px; font-family: 'Noto Sans JP', sans-serif; font-size: 15px; line-height: 1.7; color: var(--text-dark); resize: vertical; transition: border-color 0.2s; background: #FDFBF7; }
   textarea:focus { outline: none; border-color: var(--gold); background: #fff; }
   textarea::placeholder { color: #bbb; font-size: 13px; }
   .btn-wrap { text-align: center; margin-top: 8px; }
-  .btn-main {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%);
-    color: #fff;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 16px 48px;
-    border-radius: 50px;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 2px;
-    box-shadow: 0 6px 24px rgba(208,169,0,0.35);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+  .btn-main { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, #B8920A 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; padding: 16px 48px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 2px; box-shadow: 0 6px 24px rgba(208,169,0,0.35); transition: transform 0.2s, box-shadow 0.2s; }
   .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(208,169,0,0.45); }
   .btn-note { font-size: 12px; color: var(--text-light); margin-top: 10px; }
 
-  /* ========== 結果（無料版） ========== */
   #result-area { display: none; }
   .result-header { text-align: center; padding: 24px 0 16px; }
-  .result-header .badge {
-    display: inline-block;
-    background: var(--gold);
-    color: #fff;
-    font-size: 12px;
-    letter-spacing: 3px;
-    padding: 4px 16px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    font-family: 'Noto Serif JP', serif;
-  }
+  .result-header .badge { display: inline-block; background: var(--gold); color: #fff; font-size: 12px; letter-spacing: 3px; padding: 4px 16px; border-radius: 20px; margin-bottom: 12px; font-family: 'Noto Serif JP', serif; }
   .result-header h2 { font-family: 'Noto Serif JP', serif; font-size: 22px; color: var(--navy); line-height: 1.5; }
   .result-header .name-display { color: var(--gold); font-weight: 900; }
-  .cards-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 15px;
-    color: var(--navy);
-    margin: 20px 0 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
+  .cards-title { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
   .cards-title::after { content: ''; flex: 1; height: 1px; background: #E0D8C8; }
-  .card {
-    background: #fff;
-    border-radius: 14px;
-    padding: 18px 20px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 12px rgba(34,54,112,0.07);
-    border-left: 4px solid var(--gold);
-    animation: fadeUp 0.5s ease both;
-  }
+  .card { background: #fff; border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; box-shadow: 0 2px 12px rgba(34,54,112,0.07); border-left: 4px solid var(--gold); animation: fadeUp 0.5s ease both; }
   .card:nth-child(2) { animation-delay: 0.1s; }
   .card:nth-child(3) { animation-delay: 0.2s; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   .card-keyword { font-family: 'Noto Serif JP', serif; font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
   .card-desc { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
 
-  /* ========== Pro版ぼかしブロック ========== */
-  .pro-section {
-    margin-top: 24px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px 20px;
-    box-shadow: 0 4px 20px rgba(34,54,112,0.08);
-    position: relative;
-    overflow: hidden;
-  }
+  .pro-section { margin-top: 24px; background: #fff; border-radius: 16px; padding: 24px 20px; box-shadow: 0 4px 20px rgba(34,54,112,0.08); position: relative; overflow: hidden; }
   .pro-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
   .pro-title { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; }
   .pro-badge { background: var(--navy); color: var(--gold); font-size: 11px; padding: 3px 12px; border-radius: 20px; letter-spacing: 1px; }
   .blur-card { background: var(--warm-gray); border-radius: 10px; padding: 14px 18px; margin-bottom: 8px; filter: blur(4px); user-select: none; pointer-events: none; }
   .blur-card-kw { font-family: 'Noto Serif JP', serif; font-size: 16px; color: var(--navy); margin-bottom: 4px; }
   .blur-card-desc { font-size: 12px; color: #999; line-height: 1.6; }
-  .pro-overlay {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(180deg, rgba(253,248,238,0) 0%, rgba(253,248,238,0.7) 40%, rgba(253,248,238,0.97) 100%);
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 24px;
-  }
+  .pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, rgba(253,248,238,0) 0%, rgba(253,248,238,0.7) 40%, rgba(253,248,238,0.97) 100%); display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 24px; }
   .pro-message { font-family: 'Noto Serif JP', serif; font-size: 15px; color: var(--navy); font-weight: 700; text-align: center; margin-bottom: 4px; }
   .pro-message .count { color: var(--gold); font-size: 22px; }
   .pro-sub { font-size: 12px; color: var(--text-light); text-align: center; margin-bottom: 14px; }
-  .btn-pro {
-    background: var(--navy); color: #fff;
-    font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700;
-    padding: 13px 36px; border-radius: 50px; border: none; cursor: pointer;
-    letter-spacing: 1px; box-shadow: 0 4px 16px rgba(34,54,112,0.25); transition: transform 0.2s;
-  }
+  .btn-pro { background: var(--navy); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; padding: 13px 36px; border-radius: 50px; border: none; cursor: pointer; letter-spacing: 1px; box-shadow: 0 4px 16px rgba(34,54,112,0.25); transition: transform 0.2s; }
   .btn-pro:hover { transform: translateY(-2px); }
 
-  .hint-box {
-    background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%);
-    border-radius: 14px; padding: 20px; margin-top: 20px;
-    border: 1px solid rgba(34,54,112,0.12);
-  }
+  .hint-box { background: linear-gradient(135deg, #EEF2FF 0%, #E8F0FF 100%); border-radius: 14px; padding: 20px; margin-top: 20px; border: 1px solid rgba(34,54,112,0.12); }
   .hint-box-title { font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--navy); font-weight: 700; margin-bottom: 10px; }
   .hint-item { font-size: 14px; color: var(--text-mid); padding: 6px 0; border-bottom: 1px dashed #D0CCE0; line-height: 1.6; }
   .hint-item:last-child { border-bottom: none; }
-
   .retry-wrap { text-align: center; margin-top: 28px; }
-  .btn-retry {
-    background: none; border: 2px solid var(--navy); color: var(--navy);
-    font-family: 'Noto Sans JP', sans-serif; font-size: 14px;
-    padding: 10px 32px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
-  }
+  .btn-retry { background: none; border: 2px solid var(--navy); color: var(--navy); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; padding: 10px 32px; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
   .btn-retry:hover { background: var(--navy); color: #fff; }
 
-  /* ========== パスワードモーダル ========== */
-  .pw-modal {
-    background: #fff;
-    border-radius: 18px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 20px 60px rgba(10,15,40,0.3);
-    animation: modalIn 0.25s ease;
-    overflow: hidden;
-  }
+  /* パスワードモーダル */
+  .pw-modal { background: #fff; border-radius: 18px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(10,15,40,0.3); animation: modalIn 0.25s ease; overflow: hidden; }
   .pw-body { padding: 28px 24px; }
   .pw-icon { font-size: 40px; text-align: center; margin-bottom: 12px; }
   .pw-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; color: var(--navy); text-align: center; margin-bottom: 8px; }
   .pw-desc { font-size: 13px; color: var(--text-mid); text-align: center; line-height: 1.7; margin-bottom: 20px; }
-  .pw-input-wrap { position: relative; margin-bottom: 14px; }
-  .pw-input {
-    width: 100%;
-    border: 2px solid #E8E4DA;
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 16px;
-    text-align: center;
-    letter-spacing: 3px;
-    color: var(--navy);
-    transition: border-color 0.2s;
-  }
+  .pw-input { width: 100%; border: 2px solid #E8E4DA; border-radius: 10px; padding: 14px 16px; font-family: 'Noto Sans JP', sans-serif; font-size: 16px; text-align: center; letter-spacing: 3px; color: var(--navy); transition: border-color 0.2s; margin-bottom: 14px; }
   .pw-input:focus { outline: none; border-color: var(--gold); }
   .pw-input.error { border-color: #e74c3c; }
   .pw-error { font-size: 12px; color: #e74c3c; text-align: center; margin-bottom: 10px; display: none; }
-  .btn-pw-submit {
-    width: 100%;
-    background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%);
-    color: #fff;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 14px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    transition: transform 0.2s;
-  }
+  .btn-pw-submit { width: 100%; background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%); color: #fff; font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; padding: 14px; border-radius: 10px; border: none; cursor: pointer; letter-spacing: 1px; margin-bottom: 12px; transition: transform 0.2s; }
   .btn-pw-submit:hover { transform: translateY(-1px); }
+  .btn-pw-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .pw-note { font-size: 11px; color: var(--text-light); text-align: center; line-height: 1.8; }
   .pw-note a { color: var(--gold); text-decoration: none; }
-  .pw-note a:hover { text-decoration: underline; }
-  .btn-pw-cancel {
-    width: 100%;
-    background: none;
-    border: none;
-    color: var(--text-light);
-    font-size: 13px;
-    cursor: pointer;
-    margin-top: 6px;
-    padding: 6px;
-  }
+  .btn-pw-cancel { width: 100%; background: none; border: none; color: var(--text-light); font-size: 13px; cursor: pointer; margin-top: 6px; padding: 6px; }
 
-  /* ========== Pro版結果 ========== */
+  /* Pro版結果 */
   #pro-result-area { display: none; }
-  .pro-result-header {
-    background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%);
-    border-radius: 16px;
-    padding: 24px 20px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #fff;
-  }
-  .pro-result-badge {
-    display: inline-block;
-    background: var(--gold);
-    color: #fff;
-    font-size: 11px;
-    letter-spacing: 3px;
-    padding: 3px 14px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    font-family: 'Noto Serif JP', serif;
-  }
+  .pro-result-header { background: linear-gradient(135deg, var(--navy) 0%, #1a2a5a 100%); border-radius: 16px; padding: 24px 20px; text-align: center; margin-bottom: 20px; color: #fff; }
+  .pro-result-badge { display: inline-block; background: var(--gold); color: #fff; font-size: 11px; letter-spacing: 3px; padding: 3px 14px; border-radius: 20px; margin-bottom: 10px; font-family: 'Noto Serif JP', serif; }
   .pro-result-title { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; line-height: 1.5; }
   .pro-result-title span { color: var(--gold-light); }
-
-  .pro-block {
-    background: #fff;
-    border-radius: 14px;
-    padding: 22px 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 12px rgba(34,54,112,0.07);
-  }
-  .pro-block-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--navy);
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--gold-light);
-    display: flex; align-items: center; gap: 8px;
-  }
-
-  /* 強みカード（Pro版） */
-  .pro-strength-card {
-    display: flex;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px dashed #E8E4DA;
-    animation: fadeUp 0.4s ease both;
-  }
+  .pro-block { background: #fff; border-radius: 14px; padding: 22px 20px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(34,54,112,0.07); }
+  .pro-block-title { font-family: 'Noto Serif JP', serif; font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--gold-light); display: flex; align-items: center; gap: 8px; }
+  .pro-strength-card { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px dashed #E8E4DA; animation: fadeUp 0.4s ease both; }
   .pro-strength-card:last-child { border-bottom: none; }
   .pro-strength-emoji { font-size: 24px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
   .pro-strength-kw { font-family: 'Noto Serif JP', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .pro-strength-reason { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
-
-  /* 自己紹介文 */
   .intro-tab-wrap { display: flex; gap: 6px; margin-bottom: 14px; }
-  .intro-tab {
-    flex: 1;
-    padding: 8px 4px;
-    border-radius: 8px;
-    border: 2px solid #E8E4DA;
-    background: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-mid);
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-  }
+  .intro-tab { flex: 1; padding: 8px 4px; border-radius: 8px; border: 2px solid #E8E4DA; background: #fff; font-size: 12px; font-weight: 700; color: var(--text-mid); cursor: pointer; text-align: center; transition: all 0.2s; }
   .intro-tab.active { border-color: var(--navy); background: var(--navy); color: #fff; }
   .intro-content { display: none; }
   .intro-content.active { display: block; }
-  .intro-text {
-    background: var(--warm-gray);
-    border-radius: 10px;
-    padding: 16px;
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--text-dark);
-    margin-bottom: 10px;
-  }
-  .btn-copy {
-    background: none;
-    border: 1px solid var(--navy);
-    color: var(--navy);
-    font-size: 12px;
-    padding: 6px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .intro-text { background: var(--warm-gray); border-radius: 10px; padding: 16px; font-size: 14px; line-height: 1.8; color: var(--text-dark); margin-bottom: 10px; }
+  .btn-copy { background: none; border: 1px solid var(--navy); color: var(--navy); font-size: 12px; padding: 6px 16px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
   .btn-copy:hover { background: var(--navy); color: #fff; }
   .btn-copy.copied { background: #27ae60; border-color: #27ae60; color: #fff; }
-
-  /* 収益化アイデア */
-  .monetize-item {
-    padding: 12px 0;
-    border-bottom: 1px dashed #E8E4DA;
-    animation: fadeUp 0.4s ease both;
-  }
+  .monetize-item { padding: 12px 0; border-bottom: 1px dashed #E8E4DA; animation: fadeUp 0.4s ease both; }
   .monetize-item:last-child { border-bottom: none; }
   .monetize-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .monetize-desc { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
-
-  /* note記事タイトル */
-  .note-title-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px dashed #E8E4DA;
-    font-size: 14px;
-    color: var(--text-dark);
-    line-height: 1.6;
-    animation: fadeUp 0.4s ease both;
-  }
+  .note-title-item { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed #E8E4DA; font-size: 14px; color: var(--text-dark); line-height: 1.6; animation: fadeUp 0.4s ease both; }
   .note-title-item:last-child { border-bottom: none; }
-  .note-num {
-    flex-shrink: 0;
-    width: 24px; height: 24px;
-    background: var(--gold);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .note-num { flex-shrink: 0; width: 24px; height: 24px; background: var(--gold); color: #fff; font-size: 11px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-  /* ローディング */
+  /* 宝探しアニメーション */
   #loading { display: none; }
   #pro-loading { display: none; }
-
-  .treasure-loading {
-    background: var(--navy);
-    border-radius: 20px;
-    padding: 48px 24px 40px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
+  .treasure-loading { background: var(--navy); border-radius: 20px; padding: 48px 24px 40px; text-align: center; position: relative; overflow: hidden; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 24px; }
   .tl-canvas-wrap { position: absolute; inset: 0; pointer-events: none; }
   .tl-canvas-wrap canvas { width: 100%; height: 100%; display: block; }
-  .tl-gem {
-    font-size: 60px;
-    line-height: 1;
-    margin-bottom: 16px;
-    position: relative;
-    z-index: 2;
-    animation: gemPulse 1.8s ease-in-out infinite;
-    filter: drop-shadow(0 0 16px rgba(208,169,0,0.9));
-  }
-  @keyframes gemPulse {
-    0%,100% { transform: scale(1) rotate(-3deg); }
-    50%      { transform: scale(1.13) rotate(3deg); filter: drop-shadow(0 0 30px rgba(208,169,0,1)); }
-  }
-  .tl-label {
-    color: var(--gold);
-    font-size: 10px;
-    letter-spacing: 4px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 2;
-  }
-  .tl-main {
-    color: #fff;
-    font-family: 'Noto Serif JP', serif;
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 2;
-  }
-  .tl-sub {
-    color: rgba(255,255,255,0.65);
-    font-size: 13px;
-    line-height: 1.9;
-    position: relative;
-    z-index: 2;
-    min-height: 48px;
-    transition: opacity 0.4s;
-  }
-  .tl-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 18px;
-    position: relative;
-    z-index: 2;
-  }
-  .tl-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-    animation: dotBounce 1.4s ease-in-out infinite;
-  }
+  .tl-gem { font-size: 60px; line-height: 1; margin-bottom: 16px; position: relative; z-index: 2; animation: gemPulse 1.8s ease-in-out infinite; }
+  @keyframes gemPulse { 0%,100% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 16px rgba(208,169,0,0.9)); } 50% { transform: scale(1.13) rotate(3deg); filter: drop-shadow(0 0 30px rgba(208,169,0,1)); } }
+  .tl-label { color: var(--gold); font-size: 10px; letter-spacing: 4px; margin-bottom: 10px; position: relative; z-index: 2; }
+  .tl-main { color: #fff; font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; position: relative; z-index: 2; }
+  .tl-sub { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.9; position: relative; z-index: 2; min-height: 48px; transition: opacity 0.4s; }
+  .tl-dots { display: flex; justify-content: center; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
+  .tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: dotBounce 1.4s ease-in-out infinite; }
   .tl-dot:nth-child(2) { animation-delay: 0.2s; background: var(--gold-light); }
   .tl-dot:nth-child(3) { animation-delay: 0.4s; background: #fff; }
-  @keyframes dotBounce {
-    0%,80%,100% { transform: scale(0.6); opacity: 0.4; }
-    40%          { transform: scale(1.2); opacity: 1; }
-  }
+  @keyframes dotBounce { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.2); opacity: 1; } }
 
   .footer { text-align: center; padding: 20px; font-size: 11px; color: var(--text-light); border-top: 1px solid #E8E0CC; margin-top: 40px; }
-
-  @media (max-width: 480px) {
-    .header-title { font-size: 22px; }
-    .btn-main { font-size: 16px; padding: 14px 36px; }
-    .container { padding: 20px 16px 50px; }
-    .hbtn span { display: none; }
-  }
+  @media (max-width: 480px) { .header-title { font-size: 22px; } .btn-main { font-size: 16px; padding: 14px 36px; } .container { padding: 20px 16px 50px; } .hbtn span { display: none; } }
 </style>
 </head>
 <body>
 
-<!-- ヘッダー -->
 <div class="header">
   <div class="header-btns">
-    <button class="hbtn" onclick="openHowto()"><span class="icon">❓</span><span>使い方</span></button>
-    <button class="hbtn" onclick="openSettings()"><span class="icon">⚙️</span><span>設定</span></button>
+    <button class="hbtn" onclick="openHowto()">❓ <span>使い方</span></button>
+    <button class="hbtn" onclick="openSettings()">⚙️ <span>設定</span></button>
   </div>
   <div class="header-label">KEIKEN MIKKE</div>
   <div class="header-title">経験<span>みっけ</span></div>
@@ -681,43 +208,15 @@
     <div class="modal-body">
       <div class="howto-intro">
         <div class="howto-intro-title">🎯 このアプリの目的</div>
-        <div class="howto-intro-text">
-          「自分には特技がない」と思っているシニアの方へ。あなたがこれまで生きてきた経験・仕事・趣味・人間関係——それ全部が「財産」です。4つの質問に答えるだけで、<strong>眠っていた強みを言語化</strong>して、<strong>活かし方のヒント</strong>まで提案します。
-        </div>
+        <div class="howto-intro-text">「自分には特技がない」と思っているシニアの方へ。あなたがこれまで生きてきた経験・仕事・趣味・人間関係——それ全部が「財産」です。4つの質問に答えるだけで、<strong>眠っていた強みを言語化</strong>して、<strong>活かし方のヒント</strong>まで提案します。</div>
       </div>
       <ul class="howto-steps">
-        <li class="howto-step">
-          <div class="step-num">1</div>
-          <div class="step-content">
-            <div class="step-title">💼 4つの質問に答える</div>
-            <div class="step-desc">職歴・感謝されたこと・趣味・誇れること。うまく書かなくて大丈夫。思いつくまま書いてください。</div>
-          </div>
-        </li>
-        <li class="howto-step">
-          <div class="step-num">2</div>
-          <div class="step-content">
-            <div class="step-title">🔍 「強みを見つける」ボタンを押す</div>
-            <div class="step-desc">約3秒で、あなたの強みをキーワードカードとして3枚表示します（無料版）。</div>
-          </div>
-        </li>
-        <li class="howto-step">
-          <div class="step-num">3</div>
-          <div class="step-content">
-            <div class="step-title">🌟 Pro版でさらに深く分析</div>
-            <div class="step-desc">パスワードを入力すると、AIが個別に強みを10個以上分析。自己紹介文・収益化アイデア・note記事タイトルも生成されます。</div>
-          </div>
-        </li>
-        <li class="howto-step">
-          <div class="step-num">4</div>
-          <div class="step-content">
-            <div class="step-title">📋 結果をコピーしてすぐ使う</div>
-            <div class="step-desc">自己紹介文はSNS用・名刺用・LINE用の3パターン。コピーボタンでそのまま貼り付けて使えます。</div>
-          </div>
-        </li>
+        <li class="howto-step"><div class="step-num">1</div><div><div class="step-title">💼 4つの質問に答える</div><div class="step-desc">職歴・感謝されたこと・趣味・誇れること。うまく書かなくて大丈夫。思いつくまま書いてください。</div></div></li>
+        <li class="howto-step"><div class="step-num">2</div><div><div class="step-title">🔍 「強みを見つける」ボタンを押す</div><div class="step-desc">約3秒で、あなたの強みをキーワードカードとして3枚表示します（無料版）。</div></div></li>
+        <li class="howto-step"><div class="step-num">3</div><div><div class="step-title">🌟 Pro版でさらに深く分析</div><div class="step-desc">パスワードを入力すると、AIが個別に強みを10個以上分析。自己紹介文・収益化アイデア・note記事タイトルも生成されます。</div></div></li>
+        <li class="howto-step"><div class="step-num">4</div><div><div class="step-title">📋 結果をコピーしてすぐ使う</div><div class="step-desc">自己紹介文はSNS用・名刺用・LINE用の3パターン。コピーボタンでそのまま貼り付けて使えます。</div></div></li>
       </ul>
-      <div class="howto-note">
-        💡 ヒント：「設定 → デモデータを入れる」を押すと、サンプルデータで動きをすぐ確認できます。
-      </div>
+      <div class="howto-note">💡 ヒント：「設定 → デモデータを入れる」を押すと、サンプルデータで動きをすぐ確認できます。</div>
     </div>
   </div>
 </div>
@@ -757,34 +256,23 @@
     <div class="pw-body">
       <div class="pw-icon">🔑</div>
       <div class="pw-title">Pro版を利用する</div>
-      <div class="pw-desc">
-        購入後に発行されたパスワードを入力してください。<br>
-        AIがあなたの経験を深く分析します。
-      </div>
-      <div class="pw-input-wrap">
-        <input type="password" class="pw-input" id="pw-input" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')submitPassword()">
-      </div>
+      <div class="pw-desc">購入後に発行されたパスワードを入力してください。<br>AIがあなたの経験を深く分析します。</div>
+      <input type="password" class="pw-input" id="pw-input" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')submitPassword()">
       <div class="pw-error" id="pw-error">❌ パスワードが違います。もう一度お試しください。</div>
-      <button class="btn-pw-submit" onclick="submitPassword()">✨ Pro版で分析する</button>
-      <div class="pw-note">
-        パスワードをお持ちでない方は<br>
-        <a href="https://note.com/_yoshibon" target="_blank">note（@_yoshibon）</a> からご購入いただけます。
-      </div>
+      <button class="btn-pw-submit" id="pw-btn" onclick="submitPassword()">✨ Pro版で分析する</button>
+      <div class="pw-note">パスワードをお持ちでない方は<br><a href="https://note.com/_yoshibon" target="_blank">note（@_yoshibon）</a> からご購入いただけます。</div>
       <button class="btn-pw-cancel" onclick="closeModal('pw-modal')">キャンセル</button>
     </div>
   </div>
 </div>
 
-<!-- メインコンテナ -->
 <div class="container">
-
   <div class="lead-box">
     「自分には特技がない」そう思っていませんか？<br>
     でも、<strong>あなたが今まで生きてきた経験こそが、誰かにとっての宝物</strong>です。<br>
     4つの質問に答えるだけで、眠っていた強みが見つかります。
   </div>
 
-  <!-- 入力フォーム -->
   <div id="form-area">
     <div class="form-section">
       <div class="section-num">STEP 1</div>
@@ -817,9 +305,8 @@
     </div>
   </div>
 
-  <!-- 無料版ローディング -->
   <div id="loading">
-    <div class="treasure-loading" id="tl-free">
+    <div class="treasure-loading">
       <div class="tl-canvas-wrap"><canvas id="tl-canvas-free"></canvas></div>
       <div class="tl-gem">💎</div>
       <div class="tl-label">ANALYZING YOUR EXPERIENCE</div>
@@ -829,7 +316,6 @@
     </div>
   </div>
 
-  <!-- 無料版結果 -->
   <div id="result-area">
     <div class="result-header">
       <div class="badge">無料版・診断結果</div>
@@ -837,8 +323,6 @@
     </div>
     <div class="cards-title">✅ 無料版で表示できる強み（3つ）</div>
     <div id="cards-free"></div>
-
-    <!-- Pro版ぼかし -->
     <div class="pro-section">
       <div class="pro-title-row">
         <div class="pro-title">🔒 まだまだあります！</div>
@@ -855,21 +339,18 @@
         </div>
       </div>
     </div>
-
     <div class="hint-box">
       <div class="hint-box-title">💡 あなたへの活動ヒント（無料版・1つ）</div>
       <div id="hint-content"></div>
       <div style="margin-top:12px; font-size:12px; color:var(--text-light);">※ Pro版では収益化アイデア5つ＋note記事タイトル10本が生成されます</div>
     </div>
-
     <div class="retry-wrap">
       <button class="btn-retry" onclick="retry()">🔄 もう一度入力する</button>
     </div>
   </div>
 
-  <!-- Pro版ローディング -->
   <div id="pro-loading">
-    <div class="treasure-loading" id="tl-pro">
+    <div class="treasure-loading">
       <div class="tl-canvas-wrap"><canvas id="tl-canvas-pro"></canvas></div>
       <div class="tl-gem">✨</div>
       <div class="tl-label">AI DEEP ANALYSIS</div>
@@ -879,69 +360,47 @@
     </div>
   </div>
 
-  <!-- Pro版結果 -->
   <div id="pro-result-area">
     <div class="pro-result-header">
       <div class="pro-result-badge">PRO版・AI分析結果</div>
       <div class="pro-result-title">あなたの<span>すべての強み</span>が<br>見つかりました ✨</div>
     </div>
-
-    <!-- 強みカード -->
     <div class="pro-block">
       <div class="pro-block-title">🏆 あなたの強みキーワード</div>
       <div id="pro-strengths"></div>
     </div>
-
-    <!-- 自己紹介文 -->
     <div class="pro-block">
       <div class="pro-block-title">📝 あなたの自己紹介文（3パターン）</div>
       <div class="intro-tab-wrap">
-        <button class="intro-tab active" onclick="switchTab('sns')">SNS用</button>
-        <button class="intro-tab" onclick="switchTab('meishi')">名刺用</button>
-        <button class="intro-tab" onclick="switchTab('line')">LINE用</button>
+        <button class="intro-tab active" onclick="switchTab('sns',this)">SNS用</button>
+        <button class="intro-tab" onclick="switchTab('meishi',this)">名刺用</button>
+        <button class="intro-tab" onclick="switchTab('line',this)">LINE用</button>
       </div>
-      <div class="intro-content active" id="tab-sns">
-        <div class="intro-text" id="intro-sns"></div>
-        <button class="btn-copy" onclick="copyText('intro-sns', this)">📋 コピーする</button>
-      </div>
-      <div class="intro-content" id="tab-meishi">
-        <div class="intro-text" id="intro-meishi"></div>
-        <button class="btn-copy" onclick="copyText('intro-meishi', this)">📋 コピーする</button>
-      </div>
-      <div class="intro-content" id="tab-line">
-        <div class="intro-text" id="intro-line"></div>
-        <button class="btn-copy" onclick="copyText('intro-line', this)">📋 コピーする</button>
-      </div>
+      <div class="intro-content active" id="tab-sns"><div class="intro-text" id="intro-sns"></div><button class="btn-copy" onclick="copyText('intro-sns',this)">📋 コピーする</button></div>
+      <div class="intro-content" id="tab-meishi"><div class="intro-text" id="intro-meishi"></div><button class="btn-copy" onclick="copyText('intro-meishi',this)">📋 コピーする</button></div>
+      <div class="intro-content" id="tab-line"><div class="intro-text" id="intro-line"></div><button class="btn-copy" onclick="copyText('intro-line',this)">📋 コピーする</button></div>
     </div>
-
-    <!-- 収益化アイデア -->
     <div class="pro-block">
       <div class="pro-block-title">💰 収益化アイデア（5つ）</div>
       <div id="pro-monetize"></div>
     </div>
-
-    <!-- note記事タイトル -->
     <div class="pro-block">
       <div class="pro-block-title">✏️ note記事タイトル案（10本）</div>
       <div id="pro-note-titles"></div>
     </div>
-
     <div class="retry-wrap">
       <button class="btn-retry" onclick="retryAll()">🔄 最初からやり直す</button>
     </div>
   </div>
-
 </div>
 
 <div class="footer">
-  経験みっけ ｜ Powered by Smile Plus Consulting<br>
-  「考えるを、ひとりにしない」
+  経験みっけ ｜ Powered by Smile Plus Consulting<br>「考えるを、ひとりにしない」
 </div>
 
 <script>
 const WORKER_URL = 'https://keiken-mikke.yymmatsu.workers.dev';
 
-// ========== 宝探しアニメーション ==========
 const FREE_MSGS = ['あなたの人生経験を読み込んでいます','職歴・趣味・エピソードを分析中...','眠っていた強みを探しています 🔍','宝物が見つかりかけています ✨','あと少しでお見せできます...'];
 const PRO_MSGS  = ['AIがあなたの経験を深く読み込んでいます','強みを10個以上分析しています...','自己紹介文を3パターン生成中...','収益化アイデアを考えています ✨','note記事タイトルを10本生成中...','もう少しで完成します...'];
 const animFrames = {}, msgTimers = {};
@@ -987,7 +446,7 @@ function startTreasureAnim(canvasId, msgId, messages) {
   class GemFloat {
     constructor() { this.reset(); }
     reset() {
-      this.x = Math.random() * canvas.width; this.y = canvas.height + 15;
+      this.x = Math.random()*canvas.width; this.y = canvas.height+15;
       this.size = Math.random()*9+5; this.speed = Math.random()*0.45+0.18;
       this.wobble = Math.random()*Math.PI*2; this.wobbleSpeed = (Math.random()-0.5)*0.025;
       this.color = [GOLD,GOLD2,'#fff','#aaddff'][Math.floor(Math.random()*4)]; this.alpha = 0;
@@ -1001,7 +460,8 @@ function startTreasureAnim(canvasId, msgId, messages) {
       ctx.save(); ctx.globalAlpha = this.alpha*0.7; ctx.translate(this.x, this.y); ctx.fillStyle = this.color;
       const s = this.size; ctx.beginPath();
       ctx.moveTo(0,-s); ctx.lineTo(s*0.6,-s*0.2); ctx.lineTo(s*0.6,s*0.4);
-      ctx.lineTo(0,s); ctx.lineTo(-s*0.6,s*0.4); ctx.lineTo(-s*0.6,-s*0.2); ctx.closePath(); ctx.fill(); ctx.restore();
+      ctx.lineTo(0,s); ctx.lineTo(-s*0.6,s*0.4); ctx.lineTo(-s*0.6,-s*0.2);
+      ctx.closePath(); ctx.fill(); ctx.restore();
     }
   }
   const particles = Array.from({length:55}, ()=>new Particle());
@@ -1027,7 +487,6 @@ function stopTreasureAnim(canvasId) {
   if (msgTimers[canvasId])  { clearInterval(msgTimers[canvasId]); delete msgTimers[canvasId]; }
 }
 
-// ========== デモデータ ==========
 const DEMO = {
   q1: '地元の製造会社で30年、品質管理の仕事をしていました。最後は課長として10人のチームをまとめていました。',
   q2: '近所のお年寄りのパソコン設定を手伝うと、とても喜ばれました。地域の会合で司会進行を頼まれることも多かったです。',
@@ -1035,13 +494,14 @@ const DEMO = {
   q4: '会社が経営危機のとき、取引先を1から開拓して乗り越えました。子育てしながら夜間学校に通い資格も取りました。'
 };
 
-// ========== モーダル制御 ==========
 function openHowto() { document.getElementById('howto-modal').classList.add('open'); }
 function openSettings() { hideConfirm(); document.getElementById('settings-modal').classList.add('open'); }
 function openPwModal() {
   document.getElementById('pw-input').value = '';
   document.getElementById('pw-error').style.display = 'none';
   document.getElementById('pw-input').classList.remove('error');
+  document.getElementById('pw-btn').textContent = '✨ Pro版で分析する';
+  document.getElementById('pw-btn').disabled = false;
   document.getElementById('pw-modal').classList.add('open');
   setTimeout(() => document.getElementById('pw-input').focus(), 300);
 }
@@ -1050,7 +510,6 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
 });
 
-// ========== デモデータ ==========
 function loadDemo() {
   document.getElementById('q1').value = DEMO.q1;
   document.getElementById('q2').value = DEMO.q2;
@@ -1067,49 +526,22 @@ function clearDemo() {
 }
 function showConfirm(id) {
   hideConfirm();
-  const el = document.getElementById(id);
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 3500);
+  document.getElementById(id).style.display = 'block';
+  setTimeout(() => document.getElementById(id).style.display = 'none', 3500);
 }
 function hideConfirm() {
   document.getElementById('confirm-ok').style.display = 'none';
   document.getElementById('confirm-clear').style.display = 'none';
 }
 
-// ========== 強みデータベース（無料版） ==========
 const KEYWORDS = {
-  management: {
-    words: ['管理','リーダー','課長','部長','チーム','まとめ','指導','育成','監督'],
-    results: [
-      { kw: '🏆 人を動かす力', desc: 'チームをまとめ、目標に向かって人を引っ張る力があります。コーチングや管理職サポートとして今も活かせます。' },
-      { kw: '🎯 問題解決の実行力', desc: '現場で起きる問題を解決してきた経験は、コンサルティングや相談業として大きな価値になります。' }
-    ]
-  },
-  teaching: {
-    words: ['教え','伝え','説明','サポート','手伝','アドバイス','相談','指導'],
-    results: [{ kw: '🌸 伝える・教える力', desc: 'わかりやすく伝えることへの自然な才能があります。教える・伝えるは今の時代に最も求められているスキルです。' }]
-  },
-  craft: {
-    words: ['ものづくり','製造','品質','丁寧','こだわり','技術','職人','工夫'],
-    results: [{ kw: '🔧 ものを生み出す力', desc: '丁寧さとこだわりから生まれた技術力は、あなただけのオリジナルな価値です。作品販売やワークショップに展開できます。' }]
-  },
-  social: {
-    words: ['地域','つながり','コミュニティ','ボランティア','会合','人脈','仲間','交流'],
-    results: [{ kw: '🤝 人をつなぐ力', desc: '地域や人との深いつながりを作ってきた力は、コミュニティ運営やコーディネーターとして輝けるスキルです。' }]
-  },
-  resilience: {
-    words: ['乗り越え','苦労','失敗','立ち直','挑戦','困難','壁','開拓'],
-    results: [{ kw: '💪 逆境を乗り越えた経験', desc: '苦しい経験を乗り越えてきたことは、同じ境遇の人への最強のメッセージになります。体験談は誰にも書けない財産です。' }]
-  },
-  hobby: {
-    words: ['趣味','ゴルフ','料理','園芸','旅行','音楽','読書','写真','釣り','登山','家庭菜園'],
-    results: [{ kw: '🌱 深い趣味の専門知識', desc: '長年続けてきた趣味は、初心者が最も「教えてほしい」と思う専門知識の宝庫です。ブログや動画でも発信できます。' }]
-  },
-  default: [
-    { kw: '✨ 人生経験という財産', desc: '積み重ねてきた年月は、若い世代が持ちえない本物の知恵です。その経験談自体が価値になります。' },
-    { kw: '📖 語れるストーリー', desc: 'あなたの経験には、誰かの背中を押す力があります。話す・書くだけで人の役に立てます。' },
-    { kw: '🎓 継続してきた実績', desc: '何かを長年続けてきたこと自体が、信頼の証です。継続力と安定感は最大の強みのひとつです。' }
-  ]
+  management: { words: ['管理','リーダー','課長','部長','チーム','まとめ','指導','育成','監督'], results: [{ kw: '🏆 人を動かす力', desc: 'チームをまとめ、目標に向かって人を引っ張る力があります。コーチングや管理職サポートとして今も活かせます。' },{ kw: '🎯 問題解決の実行力', desc: '現場で起きる問題を解決してきた経験は、コンサルティングや相談業として大きな価値になります。' }] },
+  teaching: { words: ['教え','伝え','説明','サポート','手伝','アドバイス','相談'], results: [{ kw: '🌸 伝える・教える力', desc: 'わかりやすく伝えることへの自然な才能があります。教える・伝えるは今の時代に最も求められているスキルです。' }] },
+  craft: { words: ['ものづくり','製造','品質','丁寧','こだわり','技術','職人','工夫'], results: [{ kw: '🔧 ものを生み出す力', desc: '丁寧さとこだわりから生まれた技術力は、あなただけのオリジナルな価値です。作品販売やワークショップに展開できます。' }] },
+  social: { words: ['地域','つながり','コミュニティ','ボランティア','会合','人脈','仲間','交流'], results: [{ kw: '🤝 人をつなぐ力', desc: '地域や人との深いつながりを作ってきた力は、コミュニティ運営やコーディネーターとして輝けるスキルです。' }] },
+  resilience: { words: ['乗り越え','苦労','失敗','立ち直','挑戦','困難','壁','開拓'], results: [{ kw: '💪 逆境を乗り越えた経験', desc: '苦しい経験を乗り越えてきたことは、同じ境遇の人への最強のメッセージになります。体験談は誰にも書けない財産です。' }] },
+  hobby: { words: ['趣味','ゴルフ','料理','園芸','旅行','音楽','読書','写真','釣り','登山','家庭菜園'], results: [{ kw: '🌱 深い趣味の専門知識', desc: '長年続けてきた趣味は、初心者が最も「教えてほしい」と思う専門知識の宝庫です。ブログや動画でも発信できます。' }] },
+  default: [{ kw: '✨ 人生経験という財産', desc: '積み重ねてきた年月は、若い世代が持ちえない本物の知恵です。その経験談自体が価値になります。' },{ kw: '📖 語れるストーリー', desc: 'あなたの経験には、誰かの背中を押す力があります。話す・書くだけで人の役に立てます。' },{ kw: '🎓 継続してきた実績', desc: '何かを長年続けてきたこと自体が、信頼の証です。継続力と安定感は最大の強みのひとつです。' }]
 };
 const HINTS = [
   '📝 まずは「note」に自分の経験談を1本書いてみましょう。読んだ人から共感が生まれます。',
@@ -1117,10 +549,8 @@ const HINTS = [
   '💬 SNSで「〇〇年やってわかったこと」を週1回投稿するだけで、フォロワーが増え始めます。',
   '🤝 知人や友人の困りごとを無料で相談に乗るところからスタートすると、自然に口コミが広がります。',
 ];
-
 function getRandomItems(arr, n) { return [...arr].sort(() => Math.random() - 0.5).slice(0, n); }
 
-// ========== 無料版分析 ==========
 let savedInputs = {};
 
 function analyze() {
@@ -1146,16 +576,15 @@ function analyze() {
     }
     for (const d of KEYWORDS.default) { if (matched.length >= 3) break; matched.push(d); }
     const free3 = getRandomItems(matched.length >= 3 ? matched : [...matched, ...KEYWORDS.default], 3);
-    const hiddenCount = Math.floor(Math.random() * 4) + 6;
     document.getElementById('loading').style.display = 'none';
     document.getElementById('result-area').style.display = 'block';
-    document.getElementById('hidden-count').textContent = hiddenCount;
+    document.getElementById('hidden-count').textContent = Math.floor(Math.random()*4)+6;
     const container = document.getElementById('cards-free');
     container.innerHTML = '';
     free3.forEach((item, i) => {
       const card = document.createElement('div');
       card.className = 'card';
-      card.style.animationDelay = `${i * 0.12}s`;
+      card.style.animationDelay = `${i*0.12}s`;
       card.innerHTML = `<div class="card-keyword">${item.kw}</div><div class="card-desc">${item.desc}</div>`;
       container.appendChild(card);
     });
@@ -1164,17 +593,14 @@ function analyze() {
   }, 2800);
 }
 
-// ========== Pro版：パスワード送信 ==========
 async function submitPassword() {
   const password = document.getElementById('pw-input').value.trim();
   if (!password) { document.getElementById('pw-input').focus(); return; }
-
-  const btn = document.querySelector('.btn-pw-submit');
+  const btn = document.getElementById('pw-btn');
   btn.textContent = '確認中...';
   btn.disabled = true;
   document.getElementById('pw-error').style.display = 'none';
   document.getElementById('pw-input').classList.remove('error');
-
   try {
     const res = await fetch(WORKER_URL, {
       method: 'POST',
@@ -1187,7 +613,6 @@ async function submitPassword() {
         q4: savedInputs.q4 || ''
       })
     });
-
     if (res.status === 401) {
       document.getElementById('pw-error').style.display = 'block';
       document.getElementById('pw-input').classList.add('error');
@@ -1195,14 +620,18 @@ async function submitPassword() {
       btn.disabled = false;
       return;
     }
-
-    if (!res.ok) throw new Error('サーバーエラー');
-
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      document.getElementById('pw-error').textContent = '❌ ' + (err.error || 'エラーが発生しました。もう一度お試しください。');
+      document.getElementById('pw-error').style.display = 'block';
+      btn.textContent = '✨ Pro版で分析する';
+      btn.disabled = false;
+      return;
+    }
     const data = await res.json();
     closeModal('pw-modal');
     showProResult(data);
-
-  } catch (e) {
+  } catch(e) {
     document.getElementById('pw-error').textContent = '❌ 通信エラーが発生しました。もう一度お試しください。';
     document.getElementById('pw-error').style.display = 'block';
     btn.textContent = '✨ Pro版で分析する';
@@ -1210,70 +639,56 @@ async function submitPassword() {
   }
 }
 
-// ========== Pro版結果表示 ==========
 function showProResult(data) {
   document.getElementById('result-area').style.display = 'none';
   document.getElementById('pro-loading').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   setTimeout(() => startTreasureAnim('tl-canvas-pro', 'tl-msg-pro', PRO_MSGS), 50);
-
   setTimeout(() => {
     stopTreasureAnim('tl-canvas-pro');
     document.getElementById('pro-loading').style.display = 'none';
     document.getElementById('pro-result-area').style.display = 'block';
-
-    // 強みカード
     const sc = document.getElementById('pro-strengths');
     sc.innerHTML = '';
     (data.strengths || []).forEach((s, i) => {
       const el = document.createElement('div');
       el.className = 'pro-strength-card';
-      el.style.animationDelay = `${i * 0.07}s`;
-      el.innerHTML = `<div class="pro-strength-emoji">${s.emoji || '✨'}</div><div><div class="pro-strength-kw">${s.keyword}</div><div class="pro-strength-reason">${s.reason}</div></div>`;
+      el.style.animationDelay = `${i*0.07}s`;
+      el.innerHTML = `<div class="pro-strength-emoji">${s.emoji||'✨'}</div><div><div class="pro-strength-kw">${s.keyword}</div><div class="pro-strength-reason">${s.reason}</div></div>`;
       sc.appendChild(el);
     });
-
-    // 自己紹介文
     const intro = data.introductions || {};
     document.getElementById('intro-sns').textContent    = intro.sns    || '';
     document.getElementById('intro-meishi').textContent = intro.meishi || '';
     document.getElementById('intro-line').textContent   = intro.line   || '';
-
-    // 収益化アイデア
     const mc = document.getElementById('pro-monetize');
     mc.innerHTML = '';
     (data.monetize || []).forEach((m, i) => {
       const el = document.createElement('div');
       el.className = 'monetize-item';
-      el.style.animationDelay = `${i * 0.08}s`;
+      el.style.animationDelay = `${i*0.08}s`;
       el.innerHTML = `<div class="monetize-title">💡 ${m.title}</div><div class="monetize-desc">${m.desc}</div>`;
       mc.appendChild(el);
     });
-
-    // note記事タイトル
     const nc = document.getElementById('pro-note-titles');
     nc.innerHTML = '';
     (data.note_titles || []).forEach((t, i) => {
       const el = document.createElement('div');
       el.className = 'note-title-item';
-      el.style.animationDelay = `${i * 0.06}s`;
+      el.style.animationDelay = `${i*0.06}s`;
       el.innerHTML = `<div class="note-num">${i+1}</div><div>${t}</div>`;
       nc.appendChild(el);
     });
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 1200);
+  }, 1500);
 }
 
-// ========== タブ切り替え ==========
-function switchTab(type) {
+function switchTab(type, btn) {
   document.querySelectorAll('.intro-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.intro-content').forEach(c => c.classList.remove('active'));
-  event.target.classList.add('active');
+  btn.classList.add('active');
   document.getElementById('tab-' + type).classList.add('active');
 }
-
-// ========== コピー ==========
 function copyText(id, btn) {
   const text = document.getElementById(id).textContent;
   navigator.clipboard.writeText(text).then(() => {
@@ -1282,8 +697,6 @@ function copyText(id, btn) {
     setTimeout(() => { btn.textContent = '📋 コピーする'; btn.classList.remove('copied'); }, 2000);
   });
 }
-
-// ========== リセット ==========
 function retry() {
   document.getElementById('result-area').style.display = 'none';
   document.getElementById('form-area').style.display = 'block';
